@@ -29,4 +29,12 @@ module.exports = withPWA({
       }
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/ws/:path*',
+        destination: 'http://vps-5436481-x.dattaweb.com:8080/carpool/api/v1/ws/:path*',
+      },
+    ];
+  },
 })

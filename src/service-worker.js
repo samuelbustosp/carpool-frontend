@@ -7,15 +7,6 @@ import { StaleWhileRevalidate } from 'workbox-strategies';
 self.skipWaiting();
 clientsClaim();
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.map((key) => caches.delete(key)))
-    )
-  );
-});
-
-
 // Esta línea es CRÍTICA: aquí next-pwa inyecta los assets generados
 precacheAndRoute(self.__WB_MANIFEST);
 

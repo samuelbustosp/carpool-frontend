@@ -60,6 +60,11 @@ export function TripDriverCard({ trip ,onError }: TripCardProps) {
 
   const config =  tripButtonConfig[trip.tripState];
 
+  if (!config) {
+    console.warn("No hay configuración para el estado:", trip.tripState);
+    return null;
+  }
+
   const { label, Icon, className, disabled, onClick} = config;
  
   return (
@@ -136,15 +141,15 @@ export function TripDriverCard({ trip ,onError }: TripCardProps) {
       </div>
 
       {toast && (
-          <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[100] w-full max-w-[90%] sm:max-w-md pointer-events-none flex justify-center">
-              <div className="pointer-events-auto w-full">
-                  <Toast
-                      message={toast.message}
-                      type={toast.type}
-                      onClose={() => setToast(null)}
-                  />
-              </div>
-          </div>
+        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-100 w-full max-w-[90%] sm:max-w-md pointer-events-none flex justify-center">
+            <div className="pointer-events-auto w-full">
+              <Toast
+                message={toast.message}
+                type={toast.type}
+                onClose={() => setToast(null)}
+              />
+            </div>
+        </div>
       )}
     </div>
     

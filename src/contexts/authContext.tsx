@@ -6,7 +6,6 @@ import { LoginData } from '@/modules/auth/schemas/loginSchema';
 import { UserDebtResponseDTO } from '@/modules/debt/types/UserDebtResponseDTO';
 import { loginUser, authWithGoogle, logoutUser } from '@/services/auth/authService';
 import { getUserFile } from '@/services/media/mediaService';
-
 import { useRouter, usePathname } from 'next/navigation';
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 
@@ -23,7 +22,7 @@ interface AuthContextType {
   setPrevImage: (value: string | null) => void;
   profileViewRole: 'pasajero' | 'conductor';
   setProfileViewRole: (role: 'pasajero' | 'conductor') => void;
-  accessToken: string | null; // <--- NUEVO: Exponemos el token para el Socket
+  accessToken: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

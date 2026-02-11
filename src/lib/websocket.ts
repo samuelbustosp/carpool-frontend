@@ -7,9 +7,7 @@ export const connectWebSocket = (
   token: string,
    onMessage: (payload: unknown) => void
 ) => {  
-  const socket = new SockJS(
-    `${process.env.NEXT_PUBLIC_API_URL}/ws`
-  );
+  const socket = new SockJS('/api/ws');
 
   stompClient = Stomp.over(socket);
   stompClient.debug = () => {};
