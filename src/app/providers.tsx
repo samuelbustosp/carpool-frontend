@@ -11,6 +11,8 @@ import { TripProvider } from '@/contexts/tripContext';
 import { PUBLIC_PATHS } from '@/constants/paths/publicPaths';
 import { useRouteGuard } from '@/shared/hooks/useRouteGuard';
 
+
+
 interface AppProvidersProps {
   children: React.ReactNode;
 }
@@ -66,25 +68,25 @@ export function AppProviders({ children }: AppProvidersProps) {
   }
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <GoogleOAuthProvider clientId={clientId || ''}>
-        <GoogleReCaptchaProvider 
-          reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
-          scriptProps={{
-            async: true,
-            defer: true,
-            appendTo: 'body',
-          }}
-        >
-          <AuthProvider>
-            <TripProvider>
-              <GlobalLoadingOverlay />
-              <RouteGuardWrapper>
-              {children}
-              </RouteGuardWrapper>
-            </TripProvider>
-          </AuthProvider>
-        </GoogleReCaptchaProvider>
-      </GoogleOAuthProvider>
+        <GoogleOAuthProvider clientId={clientId || ''}>
+          <GoogleReCaptchaProvider 
+            reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
+            scriptProps={{
+              async: true,
+              defer: true,
+              appendTo: 'body',
+            }}
+          >
+            <AuthProvider>
+              <TripProvider>
+                <GlobalLoadingOverlay />
+                <RouteGuardWrapper>
+                {children}
+                </RouteGuardWrapper>
+              </TripProvider>
+            </AuthProvider>
+          </GoogleReCaptchaProvider>
+        </GoogleOAuthProvider>
     </ThemeProvider>
   );
 }

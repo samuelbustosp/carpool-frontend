@@ -5,6 +5,7 @@ interface TripPriceSummaryProps {
   publishedSeatPrice: number;
   driverPriceDiscount: number;
   netEarningsPerSeat: number;
+  commission: number;
   loading?: boolean;
 }
 
@@ -13,6 +14,7 @@ export function TripPriceSummary({
   publishedSeatPrice,
   driverPriceDiscount,
   netEarningsPerSeat,
+  commission,
   loading = false,
 }: TripPriceSummaryProps) {
   if (loading) {
@@ -36,8 +38,8 @@ export function TripPriceSummary({
         </div>
 
         <div className="flex justify-between">
-          <span>Comisión de la plataforma</span>
-          <span className="text-red-400">
+          <span>Comisión de la plataforma ({commission.toLocaleString()}%)</span>
+          <span>
             ${driverPriceDiscount.toLocaleString()}
           </span>
         </div>
@@ -48,7 +50,7 @@ export function TripPriceSummary({
         <span className="text-sm text-gray-4">
           El pasajero pagará
         </span>
-        <span className="text-lg font-semibold text-gray-7 dark:text-gray-1">
+        <span className="text-base text-gray-7 dark:text-gray-1">
           ${publishedSeatPrice.toLocaleString()}
         </span>
       </div>

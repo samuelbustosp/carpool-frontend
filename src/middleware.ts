@@ -50,7 +50,9 @@ export async function middleware(req: NextRequest) {
   // Controlar errores.
   const isValid = await verifyTokenWithServer(token);
   if (!isValid) {
-    return redirectToLogin(req);
+    const response = redirectToLogin(req);
+    clearAuthCookies(response);
+    return response;
   }
 
   //ROLES
@@ -61,6 +63,21 @@ export async function middleware(req: NextRequest) {
 }
 
 //HELPERS
+
+function clearAuthCookies(res: NextResponse): NextResponse {
+  const cookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict' as const,
+    path: '/',
+    maxAge: 0,
+  };
+
+  res.cookies.set('token', '', cookieOptions);
+  res.cookies.set('refreshToken', '', cookieOptions);
+
+  return res;
+}
 
 function redirectToLogin(req: NextRequest) {
   const url = req.nextUrl.clone();
@@ -94,26 +111,33 @@ function setTokenCookies(
 ) {
   const { accessToken, refreshToken } = tokens;
 
-  const decoded = JSON.parse(
-    Buffer.from(accessToken.split(".")[1], "base64").toString()
-  );
-  const maxAge = decoded.exp - decoded.iat;
 
-  response.cookies.set("token", accessToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    path: "/",
-    maxAge,
-  });
+  if(accessToken ) {
+    const decoded = parseJwt(accessToken);
+    const iat = Number(decoded?.iat);
+    const exp = Number(decoded?.exp);
+    const maxAge = exp > iat ? exp - iat : 60 * 60 * 2; // 2 horas por defecto
+    response.cookies.set("token", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
+      maxAge,
+    });
+  }
+ 
 
   if (refreshToken) {
+    const decoded = parseJwt(refreshToken);
+    const iat = Number(decoded?.iat);
+    const exp = Number(decoded?.exp);
+    const maxAge = exp > iat ? exp - iat : 60 * 60 * 2; // 2 horas por defecto
     response.cookies.set("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge,
     });
   }
 }

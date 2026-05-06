@@ -23,6 +23,7 @@ export default function Feed() {
   const loaderRef = useRef<HTMLDivElement | null>(null);
   const [toast, setToast] = useState<{ message: string; type: 'error' | 'warning' } | null>(null);
   const loadingRef = useRef(false);
+  const [initialized, setInitialized] = useState(false);
   
   useEffect(() => {
     const initNotifications = async () => {
@@ -87,6 +88,7 @@ export default function Feed() {
     }finally{
       loadingRef.current = false;
       setLoading(false);
+      setInitialized(true);
     }
 
   }, [city]);
@@ -102,27 +104,31 @@ export default function Feed() {
     return () => observer.disconnect();
   }, [loadFeed]);
 
+  if (!user || !initialized) {
+    return (
+      <div className="w-full">
+        {Array.from({ length: 3 }).map((_, i) => <TripSkeleton key={i} />)}
+      </div>
+    );
+  }
+
   return (
     <div className="w-full">
-      <TripList feed={feed ?? []} currentCity={currentCity?.name} loading={loading} />
-
-      {feed === null && loading &&
-        Array.from({ length: 3 }).map((_, i) => (
-          <TripSkeleton key={i} />
-        ))
+      {/* Skeleton inicial: antes de cualquier carga */}
+      {!initialized && loading &&
+        Array.from({ length: 3 }).map((_, i) => <TripSkeleton key={i} />)
       }
 
-      {feed !== null && feed.length > 0 && loading && <TripSkeleton />}
+      {/* Lista: solo cuando ya inicializó */}
+      {initialized && (
+        <TripList feed={feed ?? []} currentCity={currentCity?.name} loading={loading} />
+      )}
+
+      {/* Skeleton de paginación */}
+      {initialized && feed !== null && feed.length > 0 && loading && <TripSkeleton />}
 
       <div ref={loaderRef} className="h-1" />
-
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(null)}
-        />
-      )}
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   );
 }
