@@ -1,0 +1,44 @@
+'use client'
+
+import { getKmStats } from "@/services/stats/passengerStatsService";
+import { useEffect, useState } from "react";
+import { PassengerStat } from "../../types/PassengerStat";
+
+export function useKmStats(
+  fromDate: string,
+  toDate: string,
+  orderBy: string
+) {
+  const [data, setData] = useState<PassengerStat | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchStats = async () => {
+    setLoading(true);
+    setError(null);
+
+    const res = await getKmStats(fromDate, toDate, orderBy);
+
+    if (res.state === "ERROR") {
+      setError(res.messages?.[0] || "Error");
+      setData(null);
+    } else {
+      setData(res.data ?? null);
+    }
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (fromDate && toDate) {
+      fetchStats();
+    }
+  }, [fromDate, toDate, orderBy]);
+
+  return {
+    data,
+    loading,
+    error,
+    refetch: fetchStats,
+  };
+}

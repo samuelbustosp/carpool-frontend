@@ -49,5 +49,8 @@ export const ROUTE_PERMISSIONS: {
 
   { path: '/account/reviews', roles: 'all' },
 
+  { path: '/activity/passenger', roles: 'all' },
+  { path: '/activity/passenger', roles: ['driver'] },
+
   { path: '/admin', roles: ['admin'] },
 ];

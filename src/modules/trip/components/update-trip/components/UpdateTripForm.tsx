@@ -527,7 +527,7 @@ export function UpdateTripForm() {
             {/* Asientos disponibles */}
             <div>
               <label className="flex mb-1 items-center text-sm font-medium font-inter gap-1">
-                Asientos
+                <span className="truncate">Asientos disponibles</span>
                 <InfoTooltip text="Cantidad de asientos disponibles para pasajeros"></InfoTooltip>
               </label>
 
@@ -563,7 +563,7 @@ export function UpdateTripForm() {
             {/* Precio por asiento */}
             <div>
               <label className="flex mb-1 items-center text-sm font-medium font-inter gap-1">
-                Precio por asiento
+                <span className="truncate">Precio por asiento</span>
                 <InfoTooltip text="El precio ingresado corresponde al valor antes de comisiones. El monto que recibirás será menor una vez aplicadas las tarifas de la plataforma"></InfoTooltip>
               </label>
 
@@ -604,6 +604,7 @@ export function UpdateTripForm() {
                   publishedSeatPrice={priceSummary?.publishedSeatPrice ?? 0}
                   driverPriceDiscount={priceSummary?.driverPriceDiscount ?? 0}
                   netEarningsPerSeat={priceSummary?.netEarningsPerSeat ?? 0}
+                  commission={priceSummary?.commission ?? 0}
                   loading={calculatingPrice}
                 />
               )}

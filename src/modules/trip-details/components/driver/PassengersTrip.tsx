@@ -22,7 +22,7 @@ export default function PassengersTrip({ idTrip }: PassengersTripProps) {
 
   if (loading) {
     return (
-      <div className="max-w-md flex flex-col gap-2 w-full">
+      <div className="max-w-lg flex flex-col gap-2 w-full">
         <div className="h-4.5 w-64 bg-gray-2 animate-pulse rounded"/>
         {[...Array(3)].map((_, i) => (
           <PassengerCardSkeleton key={i} />

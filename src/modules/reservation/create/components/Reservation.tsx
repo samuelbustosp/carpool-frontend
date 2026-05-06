@@ -4,8 +4,9 @@ import { Circle, Square, Star, UserX } from "lucide-react";
 import Image from "next/image";
 import { MdOutlineBackpack, MdOutlineNoBackpack } from "react-icons/md";
 import { ReservationDTO } from "../types/reservation";
-import { formatISOToDateTime, formatISOToShortDate } from "@/shared/utils/date";
+import { formatISOToShortDate } from "@/shared/utils/date";
 import { capitalizeWords } from "@/shared/utils/string";
+import { formatISOToDateTime } from "@/shared/utils/dateTime";
 
 type ReservationVariant = 'DRIVER' | 'PASSENGER';
 export interface ReservationProps {

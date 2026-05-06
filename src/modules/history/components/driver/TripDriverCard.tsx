@@ -37,6 +37,7 @@ export function TripDriverCard({ trip ,onError, onSuccess, openMenuTripId, setOp
   const [cancelReason, setCancelReason] = useState<string | null>(null);
   const [isCancelDialogOpen, setCancelDialogOpen] = useState(false);
   const [isEditDialogOpen, setEditDialogOpen] = useState(false);
+  const [startingTrip, setStartingTrip] = useState(false);
 
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [openUpwards, setOpenUpwards] = useState(false);
@@ -108,6 +109,11 @@ export function TripDriverCard({ trip ,onError, onSuccess, openMenuTripId, setOp
   const handleAction = async (scope: TripActionScope) => {
     if (loading) return;
 
+
+    if (scope === "start") {
+      setStartingTrip(true);
+    }
+    
     setLoading(true);
 
     try {
@@ -118,6 +124,9 @@ export function TripDriverCard({ trip ,onError, onSuccess, openMenuTripId, setOp
           message: result.message ?? "Error",
           type: "error",
         });
+
+        setStartingTrip(false);
+
         return;
       }
 
@@ -408,6 +417,12 @@ export function TripDriverCard({ trip ,onError, onSuccess, openMenuTripId, setOp
           setCancelDialogOpen(true);  
         }}
       />
+
+      {startingTrip && (
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-50 rounded-lg">
+          <Loader2 size={28} className="animate-spin text-white" />
+        </div>
+      )}
     </div>
 
   );

@@ -1,5 +1,6 @@
 import { AlertCircle, CheckCircle, Info, Loader2, X } from "lucide-react"
 import { ReactNode } from "react"
+import { createPortal } from "react-dom"
 
 type AlertDialogProps = {
   isOpen: boolean
@@ -44,7 +45,7 @@ export function AlertDialog({
     if (e.target === e.currentTarget) onClose()
   }
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
       onClick={handleBackdropClick}
@@ -98,6 +99,7 @@ export function AlertDialog({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

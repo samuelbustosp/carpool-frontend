@@ -1,4 +1,46 @@
 /**
+ * Formatea una fecha a formato corto textual en español.
+ *
+ * @example
+ * formatShortDateText(new Date(2025, 2, 18))
+ * // → "18 de mar."
+ */
+export function formatShortDateText(date: Date) {
+  const parts = new Intl.DateTimeFormat('es-ES', {
+    day: '2-digit',
+    month: 'short',
+  }).formatToParts(date)
+
+  const day = parts.find((p) => p.type === 'day')?.value
+  const month = parts.find((p) => p.type === 'month')?.value.replace('.', '')
+
+  return `${day} de ${month}.`
+}
+
+/**
+ * Formatea una fecha a formato corto textual con año en español.
+ *
+ * @example
+ * formatShortDateTextWithYear(new Date(2025, 2, 18))
+ * // → "18 de mar. de 2025"
+ */
+export function formatShortDateTextWithYear(date: Date) {
+  const parts = new Intl.DateTimeFormat('es-ES', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).formatToParts(date)
+
+  const day = parts.find((p) => p.type === 'day')?.value
+  const month = parts.find((p) => p.type === 'month')?.value.replace('.', '')
+  const year = parts.find((p) => p.type === 'year')?.value
+
+  return `${day} de ${month}. ${year}`
+}
+
+
+
+/**
  * Formatea una fecha a formato corto día-mes en español.
  *
  * @example
@@ -13,6 +55,27 @@ export function formatShortDate(date: Date) {
     .format(date)
     .replace('.', '')
     .replace(' ', '-');
+}
+
+/**
+ * Formatea una fecha a formato corto día-mes-año en español.
+ *
+ * @example
+ * formatShortDateWithYear(new Date(2025, 1, 3))
+ * // → "03-feb-2025"
+ *
+ * @param date Fecha como objeto Date
+ * @returns String con formato "dd-mmm-yyyy"
+ */
+export function formatShortDateWithYear(date: Date) {
+  return new Intl.DateTimeFormat('es-ES', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  })
+    .format(date)
+    .replace(/\./g, '')
+    .replace(/ /g, '-')
 }
 
 /**
@@ -189,26 +252,11 @@ export const hasMinimumHoursRemaining = (
   return diffMs >= requiredMs
 }
 
+export function formatLocalDate(date: Date | string): string {
+  const d = new Date(date)
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
 
-/**
- * Convierte una fecha ISO (yyyy-mm-ddTHH:mm:ss) a formato local con fecha y hora.
- *
- * @example
- * formatISOToDateTime("2026-04-10T19:00:00")
- * // → "10/04/2026, 19:00"
- *
- * @param isoDate Fecha en formato ISO (yyyy-mm-ddTHH:mm:ss)
- * @returns String con formato "dd/mm/yyyy, HH:mm"
- */
-export function formatISOToDateTime(isoDate: string): string {
-  const date = parseLocalDate(isoDate);
-
-  return new Intl.DateTimeFormat("es-AR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false
-  }).format(date);
+  return `${day}-${month}-${year}`;
 }
