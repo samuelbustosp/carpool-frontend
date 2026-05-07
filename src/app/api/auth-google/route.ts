@@ -53,21 +53,25 @@ export async function POST(req: NextRequest) {
 
     const nextRes = NextResponse.json(response, { status: res.status });
 
-    // ✅ Solo setea cookies si el usuario ya está activo (no necesita completar registro)
     if (response.data.status === 'ACTIVE') {
       const { accessToken, refreshToken } = response.data;
 
-      const decoded = parseJwt(accessToken);
-      const iat = Number(decoded?.iat);
-      const exp = Number(decoded?.exp);
-      const maxAge = exp > iat ? exp - iat : 60 * 60 * 2;
+      const decodedAccess = parseJwt(accessToken);
+      const iat = Number(decodedAccess?.iat);
+      const exp = Number(decodedAccess?.exp);
+      const maxAgeAccess = exp > iat ? exp - iat : 60 * 60 * 2;
+
+      const decodedRefresh = parseJwt(refreshToken);
+      const iatR = Number(decodedRefresh?.iat);
+      const expR = Number(decodedRefresh?.exp);
+      const maxAgeRefresh = expR > iatR ? expR - iatR : 60 * 60 * 2;
 
       nextRes.cookies.set('token', accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
         path: '/',
-        maxAge,
+        maxAge: maxAgeAccess,
       });
 
       nextRes.cookies.set('refreshToken', refreshToken, {
@@ -75,16 +79,19 @@ export async function POST(req: NextRequest) {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
         path: '/',
-        maxAge: 60 * 60 * 24 * 7,
+        maxAge: maxAgeRefresh,
       });
     }
 
     return nextRes;
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Error desconocido";
-    return NextResponse.json(
+    const errorRes = NextResponse.json(      
       { data: null, messages: [message], state: "ERROR" },
       { status: 500 }
     );
+    errorRes.cookies.delete('token');         
+    errorRes.cookies.delete('refreshToken');
+    return errorRes; 
   }
 }
