@@ -85,13 +85,12 @@ export async function POST(req: NextRequest) {
     return nextRes;
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Error desconocido";
-    const errorRes = NextResponse.json(       // ⬅️ se crea...
+    const errorRes = NextResponse.json(      
       { data: null, messages: [message], state: "ERROR" },
       { status: 500 }
     );
-    errorRes.cookies.delete('token');         // ⬅️ ...se le borran cookies...
+    errorRes.cookies.delete('token');         
     errorRes.cookies.delete('refreshToken');
-    return errorRes; // ⬅️ retornás este, no el de abajo
-    // ❌ eliminar el segundo NextResponse.json que quedó abajo
+    return errorRes; 
   }
 }
