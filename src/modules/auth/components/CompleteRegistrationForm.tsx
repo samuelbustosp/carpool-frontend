@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAuth } from "@/contexts/authContext";
 
 interface CompleteRegistrationFormProps {
   email: string
@@ -30,6 +31,8 @@ export function CompleteRegistrationForm({email}:CompleteRegistrationFormProps) 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
+
+  const {accessToken, refreshToken} = useAuth()
 
   const {
     register,
@@ -107,7 +110,7 @@ export function CompleteRegistrationForm({email}:CompleteRegistrationFormProps) 
         gender: data.gender || "UNSPECIFIED",   
         birthDate: formatDate(data.birthDate),
       }
-      await completeRegistration(email, payload)
+      await completeRegistration(email, payload, accessToken ?? '', refreshToken ?? '')
       router.push(`/email-verify?email=${email}`)
     } catch {
       setError('Error al registrar usuario')

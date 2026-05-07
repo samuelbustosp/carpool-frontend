@@ -58,7 +58,7 @@ export const authWithGoogle = async (idToken: string): Promise<GoogleLoginRespon
     });
 
     const response: GoogleLoginResponse = await res.json();
-    
+
     return response;
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Error desconocido";
@@ -74,9 +74,14 @@ export const authWithGoogle = async (idToken: string): Promise<GoogleLoginRespon
  * @param {CompleteRegistrationFormData} data - Datos adicionales para completar el registro.
  * @returns {Promise<CompleteRegResponse>} - Respuesta estándar del registro completado.
  */
-export async function completeRegistration(email: string, data: CompleteRegistrationData): Promise<VoidResponse> {
+export async function completeRegistration(
+  email: string, 
+  data: CompleteRegistrationData, 
+  accessToken: string,
+  refreshToken: string
+): Promise<VoidResponse> {
   try {
-    const body = { ...data, email };
+    const body = { ...data, email, accessToken, refreshToken };
 
     const res = await fetch(`/api/users/complete-registration`, {
       method: 'POST',

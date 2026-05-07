@@ -1,4 +1,6 @@
+import { GoogleLoginResponse } from "@/modules/auth/types/dto/googleAuthResponseDTO";
 import { VoidResponse } from "@/shared/types/response";
+import { parseJwt } from "@/shared/utils/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -15,11 +17,9 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
  */
 export async function POST(req: NextRequest) {
   try {
-    // Recibir y desestructurar los datos del body
     const body = await req.json();
-    const { email, ...rest } = body;
+    const { email, accessToken, refreshToken, ...rest } = body;
 
-    // Validar si email tiene valor
     if (!email) {
       return NextResponse.json({ 
         data: null, 
@@ -27,28 +27,71 @@ export async function POST(req: NextRequest) {
         state: "ERROR" 
       }, { status: 400 });
     }
-    
-    // Extraer token de autorización de la cookie
-    const token = req.cookies.get('token')?.value;
 
     const res = await fetch(`${apiUrl}/users/complete-registration`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" ,
-        'Authorization': `Bearer ${token}`
+      headers: { 
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${accessToken}` 
       },
-      body: JSON.stringify({ email, ...rest }),
+      body: JSON.stringify({ email, ...rest }), 
     });
+
+    if (!res.ok) {
+      const errorJson: GoogleLoginResponse = await res.json();
+
+      const errorRes = NextResponse.json(errorJson, { status: res.status });
+      errorRes.cookies.delete("token");
+      errorRes.cookies.delete("refreshToken");
+
+      return errorRes;
+    }
 
     const response: VoidResponse = await res.json();
 
-    // Devolver respuesta estandarizada
-    return NextResponse.json(response, { status: res.status });
+    const nextRes = NextResponse.json(response, { status: res.status });
+
+    if (accessToken) {
+      const decoded = parseJwt(accessToken);
+      const iat = Number(decoded?.iat);
+      const exp = Number(decoded?.exp);
+      const maxAge = exp > iat ? exp - iat : 60 * 60 * 2;
+
+      nextRes.cookies.set('token', accessToken, { 
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/',
+        maxAge,
+      });
+    }
+
+    if (refreshToken) {
+      const decoded = parseJwt(refreshToken);
+      console.log('decoded',decoded)
+      const iat = Number(decoded?.iat);
+      const exp = Number(decoded?.exp);
+      const maxAge = exp > iat ? exp - iat : 60 * 60 * 2;
+
+      nextRes.cookies.set('refreshToken', refreshToken, { 
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/',
+        maxAge,
+      });
+    }
+
+    return nextRes;
   } catch (error: unknown) {
-    // Manejo de errores
     const message = error instanceof Error ? error.message : "Error desconocido";
-    return NextResponse.json(
-      { data: null, messages: [message], state: "ERROR" }, 
+    const errorRes = NextResponse.json(       // ⬅️ se crea...
+      { data: null, messages: [message], state: "ERROR" },
       { status: 500 }
     );
+    errorRes.cookies.delete('token');         // ⬅️ ...se le borran cookies...
+    errorRes.cookies.delete('refreshToken');
+    return errorRes; // ⬅️ retornás este, no el de abajo
+    // ❌ eliminar el segundo NextResponse.json que quedó abajo
   }
 }
