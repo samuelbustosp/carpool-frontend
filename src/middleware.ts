@@ -50,7 +50,9 @@ export async function middleware(req: NextRequest) {
   // Controlar errores.
   const isValid = await verifyTokenWithServer(token);
   if (!isValid) {
-    return redirectToHome(req);
+    const response = redirectToHome(req);
+    clearAuthCookies(response);
+    return response;
   }
 
   //ROLES
