@@ -23,18 +23,23 @@ export default function AdminNavbar() {
       <div className="flex-1" />
 
       {/* Avatar */}
-      <div className='flex items-center gap-2'>
-        <p>Hola, <span className='font-semibold'>{user?.name}!</span></p>
+      <div className="flex items-center gap-2 shrink-0">
+        <p>
+          Hola, <span className="font-semibold">{user?.name}!</span>
+        </p>
+
         {imageLoading ? (
-          <div className="w-7 h-7 rounded-full bg-white/10 animate-pulse" />
+          <div className="w-7 h-7 rounded-full bg-white/10 animate-pulse shrink-0" />
         ) : user?.profileImage && (
-          <Image
-            src={user.profileImage}
-            alt={user?.name ?? "Avatar"}
-            width={28}
-            height={28}
-            className="rounded-full object-cover border border-white/20"
-          />
+          <div className="w-7 h-7 rounded-full overflow-hidden shrink-0">
+            <Image
+              src={user.profileImage}
+              alt={user?.name ?? 'Avatar'}
+              width={28}
+              height={28}
+              className="w-full h-full object-cover"
+            />
+          </div>
         )}
       </div>
       

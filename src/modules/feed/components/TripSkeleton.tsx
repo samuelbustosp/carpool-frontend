@@ -1,6 +1,6 @@
 export default function TripSkeleton() {
   return (
-    <div className="trip-card mb-4 p-4 border border-gray-2 rounded shadow-sm animate-pulse">
+    <div className="mb-4 p-4 border border-gray-2 rounded shadow-sm animate-pulse">
       {/* Parte superior: horas y ciudades */}
       <div className="flex items-center">
         <div className="flex flex-col w-full">

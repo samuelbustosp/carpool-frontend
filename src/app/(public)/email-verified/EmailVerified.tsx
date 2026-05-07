@@ -25,7 +25,7 @@ export default function EmailVerifiedPage() {
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen py-6 px-8 text-center">
+      <div className="flex flex-col items-center justify-center min-h-screen py-6 text-center">
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
           <CheckCircle className="w-10 h-10 text-success" />
         </div>
@@ -65,7 +65,7 @@ export default function EmailVerifiedPage() {
 
   if (status === "error") {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen py-6 px-8 text-center">
+      <div className="flex flex-col items-center justify-center min-h-screen py-6 text-center">
         <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6">
           <XCircle className="w-10 h-10 text-error" />
         </div>

@@ -21,7 +21,7 @@ export default function ProfilePage() {
   };
   
   return (
-      <div className="max-w-lg mx-auto">
+      <div className="max-w-lg mx-auto w-full">
         <div className='md:mt-4'>
           <ProfileHeader role={profileViewRole} />
         </div>

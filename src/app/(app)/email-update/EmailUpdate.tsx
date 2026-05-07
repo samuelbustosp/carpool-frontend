@@ -39,7 +39,7 @@ export default function EmailUpdatePage(){
                 setStatus("error");
                 setMessage(result.messages[0] || "Hubo un problema al actualizar el correo.");
             }
-            // Redirigir después de 3 segundos, por ejemplo
+            // Redirigir después de 3 segundos
             setTimeout(() => router.push("/login"), 3000);
         } catch (error) {
             console.error(error);

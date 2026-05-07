@@ -43,7 +43,7 @@ export function VehicleSelector({
             <div
               key={v.id}
               className={`rounded-lg transition-all ${
-                selectedVehicleId === v.id ? "ring-2 ring-blue-500" : ""
+                selectedVehicleId === v.id ? "ring-2 ring-gray-11" : ""
               }`}
             >
               <VehicleCard vehicle={v} onClick={() => onSelect(v)} />

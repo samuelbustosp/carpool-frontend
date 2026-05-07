@@ -186,7 +186,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setLoading(false);
 
       if (!hasUser && !isPublicRoute) {
-        router.replace('/login');
+        router.replace('/');
       }
     };
 

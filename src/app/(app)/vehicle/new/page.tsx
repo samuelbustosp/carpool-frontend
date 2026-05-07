@@ -2,10 +2,10 @@ import { VehicleForm } from "@/modules/vehicle/components/new-vehicle/VehicleFor
 
 export default function VehicleNewPage(){
   return (
-    <div className="flex flex-col items-center">
-      <div className="w-full max-w-lg md:py-8">
-        <VehicleForm />
-      </div>
+    <div className="flex flex-col flex-1 items-center max-w-lg w-full">
+      
+      <VehicleForm />
+      
     </div>
   );
 }

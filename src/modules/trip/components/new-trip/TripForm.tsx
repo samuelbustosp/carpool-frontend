@@ -29,6 +29,7 @@ import { TripPriceSummary } from './TripPriceSummary';
 import { TripRoutePreview } from './TripRoutePreview';
 import { TripStopForm } from './tripStop/TripStopsForm';
 import { VehicleSelector } from './VehicleSelector';
+import { R2_PUBLIC_PREFIX } from '@/constants/imagesR2';
 
 interface BaggageOption {
   value: string;
@@ -45,7 +46,7 @@ export const baggageOptions: BaggageOption[] = [
 
 
 export function TripForm() {
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 >(1);
   const [toast, setToast] = useState<{ message: string; type: 'error' | 'warning' | 'success' } | null>(null);
   const router = useRouter()
   const {user,driver} = useAuth();
@@ -70,7 +71,14 @@ export function TripForm() {
 
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const { handleSubmit, register, watch, setValue, trigger, formState: { errors , isValid},  }  = useForm<TripFormData>({
+  const { 
+    handleSubmit, 
+    register,
+    watch, 
+    setValue, 
+    trigger, 
+    formState: { errors , isValid},  
+  }  = useForm<TripFormData>({
     resolver: zodResolver(tripSchema),
     mode: 'onChange',
     defaultValues: {
@@ -297,7 +305,7 @@ export function TripForm() {
 
   if (vehiclesLoading) {
     return (
-      <div className="flex flex-col justify-start gap-4  h-screen w-full max-w-md mx-auto md:py-8">
+      <div className="flex flex-col justify-start gap-4 w-full md:py-8">
         <div className='h-6 w-2/3 bg-gray-2 animate-pulse rounded'></div>
         {Array.from({ length: Math.max(vehicles.length, 3) }).map((_, idx) => (
             <VehicleCardSkeleton key={idx} />
@@ -312,7 +320,7 @@ export function TripForm() {
     return (
       <div className="flex flex-col justify-center items-center w-full h-full">
         <Image
-          src="/vehicles.svg"
+          src={`${R2_PUBLIC_PREFIX}/vehicles.svg`}
           alt="Imagen de vehículo claro"
           width={200}
           height={166}
@@ -320,7 +328,7 @@ export function TripForm() {
         />
 
         <Image
-          src="/vehicles-dark.svg"
+          src={`${R2_PUBLIC_PREFIX}/vehicles-dark.svg`}
           alt="Imagen de vehículo oscuro"
           width={200}
           height={166}
@@ -356,26 +364,25 @@ export function TripForm() {
 
 
   return (
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-start gap-4 h-full w-full max-w-md mx-auto md:py-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1">
         {step === 1 && (
           // === PASO 1: Seleccionar vehículo ===
-          <div className='flex flex-col justify-between h-full'>
-            <div>
-              <div className='text-center mb-4'>
-                <h2 className="text-2xl"><span className='font-semibold'>{user?.name}</span>, ¿con qué vehículo 
-                  deseas viajar hoy? 
-                </h2>
+            <div className='flex flex-col flex-1 justify-between'>
+              <div>
+                <div className='text-center mb-4'>
+                  <h2 className="text-2xl"><span className='font-semibold'>{user?.name}</span>, ¿con qué vehículo 
+                    deseas viajar hoy? 
+                  </h2>
+                </div>
+
+                {vehiclesError && <p className="text-sm text-red-500">{vehiclesError}</p>}
+
+                <VehicleSelector
+                  selectedVehicleId={selectedVehicleId}
+                  onSelect={(vehicle) => setValue('idVehicle', vehicle.id)}
+                />
               </div>
-
-              {vehiclesError && <p className="text-sm text-red-500">{vehiclesError}</p>}
-
-              <VehicleSelector
-                selectedVehicleId={selectedVehicleId}
-                onSelect={(vehicle) => setValue('idVehicle', vehicle.id)}
-              />
-            </div>
-
-            <div className="flex justify-center gap-2 mt-12">
+              
               <Button
                 type="button"
                 variant="primary"
@@ -385,16 +392,17 @@ export function TripForm() {
               >
                 Siguiente
               </Button>
+              
             </div>
-          </div>
+          
         )}
 
         {step === 2 && (
           // === PASO 2: Datos viaje ===
-          <div className="flex flex-col justify-between flex-1 pb-8">
-            <div className='space-y-3'>
+          <div className="flex flex-col justify-between overflow-y-auto flex-1">
+            <div className='space-y-3 h-full'>
               
-              <h2 className="text-2xl font-medium">Nuevo viaje</h2>
+              <h2 className="text-2xl font-medium">Datos del viaje</h2>
                 
               <div className="">
                 <CityAutocomplete
@@ -599,20 +607,21 @@ export function TripForm() {
             </div>
 
 
-            <div className="flex justify-center gap-7.5 mt-8">
+            <div className="flex gap-4 mt-8 w-full">
               <Button 
                 type="button" 
                 variant="outline" 
                 onClick={() => setStep(1)}
-                className='px-15 py-2 text-sm font-inter font-medium'
+                className="flex-1 py-2 text-sm font-inter font-medium"
               >
                 Atrás
               </Button>
+
               <Button
                 type="button"
                 variant="primary"
                 onClick={() => setStep(3)}
-                className='px-12 py-2 text-sm font-inter font-medium'
+                className="flex-1 py-2 text-sm font-inter font-medium"
                 disabled={!isValid || !!priceCalculationError || calculatingPrice || !!dateError}
               >
                 Siguiente
@@ -624,7 +633,7 @@ export function TripForm() {
 
         {step === 3 && (
           // === PASO 3: Seleccionar equipaje ===
-          <div className='flex flex-col justify-between h-full items-center'>
+          <div className='flex flex-col justify-between flex-1 items-center'>
             <div className='flex flex-col justify-center items-center'>
               <h2 className="text-2xl text-center font-medium mb-16 ">
                 Seleccioná el equipaje que cargará cada pasajero
@@ -649,12 +658,12 @@ export function TripForm() {
               </div>
             </div>
 
-            <div className="flex justify-center gap-7.5 mt-8">
+            <div className="flex justify-center gap-4 mt-8 w-full">
               <Button 
                 type="button" 
                 variant="outline" 
                 onClick={() => setStep(2)}
-                className='px-15 py-2 text-sm font-inter font-medium'
+                className='flex-1 py-2 text-sm font-inter font-medium'
               >
                 Atrás
               </Button>
@@ -663,7 +672,7 @@ export function TripForm() {
                 variant="primary"
                 onClick={() => setStep(4)}
                 disabled={!availableBaggage}
-                className='px-12 py-2 text-sm font-inter font-medium'
+                className='flex-1 py-2 text-sm font-inter font-medium'
               >
                 Siguiente
               </Button>
@@ -674,12 +683,12 @@ export function TripForm() {
         )}
 
       {step === 4 && (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col flex-1 justify-between h-full">
           
           {/* Parte superior (centrada) */}
           <div className="flex flex-col items-center gap-8 justify-center flex-1">
             <Image 
-              src="/map-pin-2.svg"
+              src={`${R2_PUBLIC_PREFIX}/map-pin-2.svg`}
               alt="Imagen MapPin"
               width={121}
               height={0}
@@ -692,13 +701,13 @@ export function TripForm() {
           </div>
 
           {/* Botones abajo del todo */}
-          <div className="flex flex-col items-center gap-6 mb-6">
-            <div className="flex justify-center gap-7.5">
+          <div className="flex flex-col items-center gap-6 mb-6 w-full">
+            <div className="flex justify-center gap-4 w-2/3">
               <Button 
                 type="button"
                 variant="outline"
                 onClick={() => setStep(6)}
-                className="px-6 py-2 text-sm font-inter font-medium"
+                className="flex-1 py-2 text-sm font-inter font-medium"
               >
                 No
               </Button>
@@ -706,7 +715,7 @@ export function TripForm() {
                 type="button"
                 variant="primary"
                 onClick={() => setStep(5)}
-                className="px-6 py-2 text-sm font-inter font-medium"
+                className="flex-1 py-2 text-sm font-inter font-medium"
               >
                 Sí
               </Button>
@@ -717,7 +726,7 @@ export function TripForm() {
               onClick={() => setStep(3)}
               className="flex items-center gap-1 hover:gap-1.5
                         transition-all duration-200 text-sm
-                        hover:scale-105 hover:text-[15px] hover:text-gray-6 cursor-pointer border-b border-gray-9 px-2 py-1 rounded-lg"
+                        hover:scale-105 hover:text-[15px] hover:text-gray-6 cursor-pointer px-2 py-1 rounded-lg"
             >
               <ChevronLeftCircle size={16}/>
               Volver a los datos del viaje
@@ -730,38 +739,36 @@ export function TripForm() {
         </div>
       )}
 
-
-        {step === 5 && (
-          <div className="flex flex-col h-screen md:pb-8 justify-between">
-            {/* Contenido principal con scroll si es necesario */}
-            <div className="flex-1">
-              <TripStopForm
-                initialStops={watch("tripStops")}
-                onSubmitTripStops={(stops) => {
-                  setValue("tripStops", stops, { shouldValidate: true });
-                  handleTripStopsSubmit(stops); // tu lógica previa
-                }}
-                origin={origin?.cityId}
-                destination={destination?.cityId}
-                onBack={() => setStep(4)}
-                onNext={() => {
-                  trigger().then((valid) => {
-                    if (valid) setStep(6);
-                  });
-                }}
-              />
-              {errors.tripStops && (
-                <p className="text-xs text-red-500 mt-2">
-                  {errors.tripStops.message}
-                </p>
-              )}
-            </div>
-
+      {step === 5 && (
+        <div className="flex flex-col flex-1 justify-between">
+          {/* Contenido principal con scroll si es necesario */}
+          <div className="flex flex-col flex-1">
+            <TripStopForm
+              initialStops={watch("tripStops")}
+              onSubmitTripStops={(stops) => {
+                setValue("tripStops", stops, { shouldValidate: true });
+                handleTripStopsSubmit(stops);
+              }}
+              origin={origin?.cityId}
+              destination={destination?.cityId}
+              onBack={() => setStep(4)}
+              onNext={() => {
+                trigger().then((valid) => {
+                  if (valid) setStep(6);
+                });
+              }}
+            />
+            {errors.tripStops && (
+              <p className="text-xs text-red-500 mt-2">
+                {errors.tripStops.message}
+              </p>
+            )}
           </div>
-        )}
+        </div>
+      )}
 
         {step === 6 && (
-          <div className="flex flex-col justify-between h-full items-center">
+          <div className="flex flex-col flex-1 justify-between items-center">
             <div className="flex flex-col gap-4 w-full max-w-md mx-auto mt-8">
               <h2 className="text-2xl text-center font-semibold mb-6">
                 ¿Deseas confirmar el recorrido?
@@ -774,12 +781,12 @@ export function TripForm() {
               
             </div>
 
-            <div className="flex justify-center gap-7.5 mt-8">
+            <div className="flex justify-center gap-4 mt-8 w-full">
               <Button 
                 type="button" 
                 variant="outline" 
                 onClick={() => setStep(tripStops.length > 0 ? 5 : 4)}
-                className='px-15 py-2 text-sm font-inter font-medium'
+                className='flex-1 py-2 text-sm font-inter font-medium'
               >
                 Atrás
               </Button>
@@ -787,7 +794,7 @@ export function TripForm() {
                 type="button"
                 variant="primary"
                 onClick={() => setStep(7)}
-                className='px-12 py-2 text-sm font-inter font-medium'
+                className='flex-1 py-2 text-sm font-inter font-medium'
               >
                 Siguiente
               </Button>
@@ -796,7 +803,7 @@ export function TripForm() {
         )}
 
         {step === 7 && (
-          <div className='flex flex-col justify-between mb-8 '>
+          <div className='flex flex-col flex-1 justify-between'>
             <TripDetail
               origin={origin?.cityName ?? "Origen"}
               destination={destination.cityName ?? "Destino"}
@@ -808,13 +815,13 @@ export function TripForm() {
               vehicle={selectedVehicle!}
               onBack={() => setStep(5)}
             />
-            <div className="flex justify-center gap-7.5 my-8 mb-8">
+            <div className="flex justify-center gap-4 mt-8 w-full">
               <Button 
                 type="button" 
                 variant="outline" 
                 disabled= {isProcessing}
                 onClick={() => setIsCancelDialogOpen(true)}
-                className='px-12 py-2 text-sm font-inter font-medium'
+                className='flex-1 py-2 text-sm font-inter font-medium'
               >
                 Cancelar
               </Button>
@@ -822,7 +829,7 @@ export function TripForm() {
                 type="button"
                 onClick={() => setIsDialogOpen(true)}
                 variant="primary"
-                className='px-12 py-2 text-sm font-inter font-medium'
+                className='flex-1 py-2 text-sm font-inter font-medium'
               > 
                 {isProcessing ? (
                   <div className='px-5 py-0.5'>

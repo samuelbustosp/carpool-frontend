@@ -4,7 +4,7 @@ export default function PublicLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen overflow-y-auto px-6 sm:px-8 py-4">
+    <div className="min-h-screen overflow-y-auto px-6 sm:px-8">
       {children}
     </div>
   );

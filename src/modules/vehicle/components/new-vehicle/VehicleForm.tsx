@@ -9,7 +9,12 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { VehicleTypeList } from "../vehicle-type/VehicleTypeList"
 import { Alert } from "@/components/ux/Alert"
-import { RegisterVehicleStep1Data, registerVehicleStep1Schema, RegisterVehicleStep2Data, registerVehicleStep2Schema} from "../../schemas/vehicleSchema"
+import { 
+  RegisterVehicleStep1Data, 
+  registerVehicleStep1Schema, 
+  RegisterVehicleStep2Data, 
+  registerVehicleStep2Schema
+} from "../../schemas/vehicleSchema"
 import { vehicleFormData } from "../../types/vehicle"
 import InfoTooltip from "@/components/ux/InfoTooltip"
 
@@ -81,28 +86,31 @@ export function VehicleForm() {
   };
 
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex flex-col flex-1 gap-4 w-full">
       
       {/* STEP 1 */}
       {step === 1 && (
-        <>
+        <div className="flex flex-col flex-1 gap-4">
           <h1 className="text-xl font-semibold">Selecciona el tipo de vehículo</h1>
-          <form onSubmit={step1Form.handleSubmit(handleNextFromStep1)} className="flex flex-col gap-4">
+          <form onSubmit={step1Form.handleSubmit(handleNextFromStep1)} className="flex flex-col flex-1 justify-between">
             {/* Lista de tipos de vehículos */}
-            <VehicleTypeList 
-              selectedId={step1Form.watch("vehicleTypeId")} 
-              onSelect={(id) => step1Form.setValue("vehicleTypeId", id, { shouldValidate: true })} 
-            />
+            <div className="flex flex-col">
+              <VehicleTypeList 
+                selectedId={step1Form.watch("vehicleTypeId")} 
+                onSelect={(id) => step1Form.setValue("vehicleTypeId", id, { shouldValidate: true })} 
+              />
 
-            {step1Form.formState.errors.vehicleTypeId && (
-              <p className="text-red-500 text-sm">{step1Form.formState.errors.vehicleTypeId.message}</p>
-            )}
+              {step1Form.formState.errors.vehicleTypeId && (
+                <p className="text-red-500 text-sm">{step1Form.formState.errors.vehicleTypeId.message}</p>
+              )}
+            </div>
+            
 
             <Button type="submit" variant="primary" className="w-full">
               Siguiente
             </Button>
           </form>
-        </>
+        </div>
       )}
 
       {/* STEP 2 */}

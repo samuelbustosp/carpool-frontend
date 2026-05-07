@@ -2,7 +2,7 @@ import { ReviewsOptions } from "@/modules/settings/components/options/ReviewsOpt
 
 export default function ReviewsPage() {
   return(
-    <div className="px-4 max-w-md mx-auto space-y-4">
+    <div className="max-w-lg mx-auto space-y-4 w-full">
       <ReviewsOptions />
     </div>
   )

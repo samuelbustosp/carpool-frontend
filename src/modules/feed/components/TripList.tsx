@@ -81,8 +81,9 @@ export default function TripList({ feed, currentCity, originSearch, destinationS
   // --- Lista visible según el contador ---
   const visibleTrips = feed.slice(0, visibleCount);
   let lastDate = "";
+  
   return (
-    <div className="">
+    <div className="w-full">
       {visibleTrips.map((trip, index) => {
         const tripDate = parseLocalDate(trip.startDateTime.split("T")[0]);
         const tripDateString = tripDate.toISOString().slice(0, 10); // yyyy-mm-dd
