@@ -32,6 +32,7 @@ interface AuthContextType {
   profileViewRole: 'pasajero' | 'conductor';
   setProfileViewRole: (role: 'pasajero' | 'conductor') => void;
   accessToken: string | null; 
+  refreshToken: string | null; 
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -47,6 +48,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   
   const [prevImage, setPrevImage] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null); 
+  const [refreshToken, setRefreshToken] = useState<string | null>(null); 
   
   const router = useRouter();
   const pathname = usePathname();
@@ -252,6 +254,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (result.data.accessToken) {
           setAccessToken(result.data.accessToken);
         }
+
+        if (result.data.refreshToken) {
+          setRefreshToken(result.data.refreshToken);
+        }
         
         if (result.data.status === 'PENDING_PROFILE') {
           setAuthRedirecting(true);
@@ -295,7 +301,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     fetchUser, fetchDriver, fetchFullUser, fetchUserDebt, fetchUserImage,
     prevImage, setPrevImage, 
     profileViewRole, setProfileViewRole,
-    accessToken 
+    accessToken,
+    refreshToken
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

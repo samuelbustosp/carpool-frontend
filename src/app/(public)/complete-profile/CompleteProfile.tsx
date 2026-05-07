@@ -28,7 +28,7 @@ export default function CompleteProfilePage({ queryEmail }: Props) {
 
   return (
     
-      <div className="mx-auto w-full max-w-lg space-y-6">
+      <div className="mx-auto w-full max-w-lg space-y-6 py-4">
 
         <Link
           href="/login"
