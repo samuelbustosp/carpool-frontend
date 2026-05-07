@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function RegisterPage() {
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row py-4">
       {/* Columna izquierda fija (solo en md+) */}
       <div className="hidden md:flex fixed inset-y-0 left-0 w-1/2 bg-gradient-to-b from-dark-4 via-dark-3 to-dark-2 px-[156px] py-12 items-center justify-center z-10">
         <div className="flex flex-col items-center text-center w-[200px]">

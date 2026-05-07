@@ -30,7 +30,7 @@ export async function middleware(req: NextRequest) {
 
 
   if (!token) {
-    return redirectToLogin(req);
+    return redirectToHome(req);
   }
 
 
@@ -44,25 +44,31 @@ export async function middleware(req: NextRequest) {
         return response;
       }
     }
-    return redirectToLogin(req);
+    return redirectToHome(req);
   }
 
   // Controlar errores.
   const isValid = await verifyTokenWithServer(token);
   if (!isValid) {
-    const response = redirectToLogin(req);
+    const response = redirectToHome(req);
     clearAuthCookies(response);
     return response;
   }
 
   //ROLES
   const payload = parseJwt(token);
-  if (!payload) return redirectToLogin(req);
+  if (!payload) return redirectToHome(req);
 
   return NextResponse.next();
 }
 
 //HELPERS
+
+function redirectToHome(req: NextRequest) {
+  const url = req.nextUrl.clone();
+  url.pathname = "/";
+  return NextResponse.redirect(url);
+}
 
 function clearAuthCookies(res: NextResponse): NextResponse {
   const cookieOptions = {
@@ -77,12 +83,6 @@ function clearAuthCookies(res: NextResponse): NextResponse {
   res.cookies.set('refreshToken', '', cookieOptions);
 
   return res;
-}
-
-function redirectToLogin(req: NextRequest) {
-  const url = req.nextUrl.clone();
-  url.pathname = "/login";
-  return NextResponse.redirect(url);
 }
 
 async function refreshAccessToken(refreshToken: string) {

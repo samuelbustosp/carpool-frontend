@@ -106,14 +106,15 @@ export default function Feed() {
 
   if (!user || !initialized) {
     return (
-      <div className="w-full">
+      <div className="w-full md:min-w-lg">
         {Array.from({ length: 3 }).map((_, i) => <TripSkeleton key={i} />)}
       </div>
     );
   }
+  
 
   return (
-    <div className="w-full">
+    <div className="w-full md:min-w-lg">
       {/* Skeleton inicial: antes de cualquier carga */}
       {!initialized && loading &&
         Array.from({ length: 3 }).map((_, i) => <TripSkeleton key={i} />)

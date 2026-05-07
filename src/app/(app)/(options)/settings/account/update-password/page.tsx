@@ -3,7 +3,7 @@ import UpdatePasswordForm from "@/modules/settings/components/account/UpdatePass
 
 export default function UpdatePasswordPage() {
   return(
-    <div className="p-4 max-w-md mx-auto space-y-4">
+    <div className="p-4 max-w-md mx-auto space-y-4 w-full">
         <UpdatePasswordForm />
     </div>
   )

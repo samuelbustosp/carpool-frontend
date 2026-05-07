@@ -37,7 +37,7 @@ export default function LoginPage() {
 
           <LoginForm />
           {/* Disclaimer obligatorio si ocultás el badge de reCAPTCHA */}
-          <p className="mt-6 text-center text-xs text-gray-400 font-inter">
+          <p className="mt-4 text-center text-xs text-gray-400 font-inter">
             This site is protected by reCAPTCHA and the Google
             <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="mx-1 underline">
               Privacy Policy

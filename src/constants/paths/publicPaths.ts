@@ -9,6 +9,7 @@ export const PUBLIC_PATHS = {
     '/password-change',
     '/complete-profile',
     '/unlock-account',
+    '/password-change/send-email',
   ],
   api: [
     '/api/login',

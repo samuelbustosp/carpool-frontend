@@ -3,7 +3,7 @@ import { SecurityOptions } from "@/modules/settings/components/options/SecurityO
 
 export default function SettingsPage() {
   return(
-    <div className="p-4 max-w-md mx-auto space-y-4">
+    <div className="max-w-md mx-auto space-y-4 w-full">
       <SecurityOptions />
     </div>
   )

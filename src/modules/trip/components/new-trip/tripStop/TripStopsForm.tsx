@@ -22,7 +22,15 @@ type TripStopFormProps = {
   onNext: () => void
 };
 
-export function TripStopForm({ initialStops=[], origin, destination, onSubmitTripStops, onBack, onNext }: TripStopFormProps){
+export function TripStopForm({ 
+    initialStops=[], 
+    origin, 
+    destination, 
+    onSubmitTripStops, 
+    onBack, 
+    onNext 
+}: TripStopFormProps){
+
     const [tripStopsList, setTripStopsList] = useState<TripStopProps[]>(
         [...initialStops]
             .sort((a, b) => {
@@ -136,7 +144,7 @@ export function TripStopForm({ initialStops=[], origin, destination, onSubmitTri
 
     
     return(
-        <div className="flex flex-col justify-start gap-4 h-full w-full max-w-md mx-auto">
+        <div className="flex flex-col flex-1 justify-between w-full max-w-md mx-auto">
             <div className="flex flex-col space-y-2 justify-center w-full">
                 <h2 className="text-2xl text-center font-medium mb-7.5">
                     Ingresá tus paradas intermedias
@@ -198,31 +206,32 @@ export function TripStopForm({ initialStops=[], origin, destination, onSubmitTri
                         </div>
                     </div>
                 )}
-                <div className="flex justify-center gap-7.5 my-8">
-                    <Button 
-                        variant="outline" 
-                        className='px-15 py-2 text-sm font-inter font-medium'
-                        onClick={() => {
-                            onSubmitTripStops(formatTripStop(tripStopsList));
-                            onBack();
-                        }}
-                    >
-                        Atrás
-                    </Button>
-                    <Button
-                        type="button"
-                        variant="primary"
-                        className='px-12 py-2 text-sm font-inter font-medium'
-                        disabled={tripStopsList.length === 0} 
-                        onClick={() => {
-                            onSubmitTripStops(formatTripStop(tripStopsList));
-                            onNext();
-                        }}
-                    >
-                        Siguiente
-                    </Button>
+                
+            </div>
+            <div className="flex justify-center gap-4 mt-8">
+                <Button 
+                    variant="outline" 
+                    className='flex-1 py-2 text-sm font-inter font-medium'
+                    onClick={() => {
+                        onSubmitTripStops(formatTripStop(tripStopsList));
+                        onBack();
+                    }}
+                >
+                    Atrás
+                </Button>
+                <Button
+                    type="button"
+                    variant="primary"
+                    className='flex-1 py-2 text-sm font-inter font-medium'
+                    disabled={tripStopsList.length === 0} 
+                    onClick={() => {
+                        onSubmitTripStops(formatTripStop(tripStopsList));
+                        onNext();
+                    }}
+                >
+                    Siguiente
+                </Button>
 
-                </div>
             </div>
             {toast && (
                 <Toast

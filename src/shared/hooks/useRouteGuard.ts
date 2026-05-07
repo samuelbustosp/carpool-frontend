@@ -24,7 +24,7 @@ export function useRouteGuard() {
 
     // no logueado
     if (!user && !isPublicRoute) {
-      router.replace('/login');
+      router.replace('/');
       return;
     }
 

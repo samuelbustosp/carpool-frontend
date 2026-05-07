@@ -13,7 +13,7 @@ export default function SearchBar() {
   return (
     <button
       onClick={handleClick}
-      className="flex items-center justify-between w-md md:w-lg bg-gray-10 p-2 rounded-2xl text-start cursor-pointer"
+      className="flex items-center justify-between w-full bg-gray-10 p-2 rounded-2xl text-start cursor-pointer"
     >
       <span className="ml-2">¿Dónde viajamos hoy?</span>
       <Search />

@@ -39,7 +39,7 @@ export function TripDetail({
   return (
     <div className="flex flex-col items-center w-full max-w-md mx-auto">
       <div className="w-full mb-4">
-        <h2 className="text-xl font-semibold text-start">Detalle del viaje</h2>
+        <h2 className="text-xl font-semibold text-start">Detalles del viaje</h2>
       </div>
       
       <div className="w-full flex flex-col gap-3">

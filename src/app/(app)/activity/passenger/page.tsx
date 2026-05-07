@@ -2,7 +2,7 @@ import PassengerActivity from "@/modules/activity/components/passenger/Passenger
 
 export default function ActivityPassengerPage() {
   return(
-    <div className="max-w-lg mx-auto">
+    <div className="max-w-lg mx-auto w-full">
       <PassengerActivity/>
     </div>
   );

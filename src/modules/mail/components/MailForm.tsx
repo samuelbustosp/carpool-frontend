@@ -103,7 +103,7 @@ export default function MailForm({
     }
 
     return (
-    <div className="flex flex-col items-center justify-center min-h-screen text-center py-6 px-8">
+    <div className="flex flex-col items-center justify-center min-h-screen text-center py-6">
 
       {/* Icono */}
       <div className="w-20 h-20 bg-gray-1/90 rounded-full flex items-center justify-center mb-4">

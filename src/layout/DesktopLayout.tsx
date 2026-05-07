@@ -18,23 +18,25 @@ export default function DesktopLayout({ children }: { children: React.ReactNode 
   
 
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen">
       {shouldShowSidebar && <DesktopSidebar />}
 
-      <main
-        className={`${shouldShowSidebar ? 'ml-64' : ''} flex-1`}
-        style={{
-          height: showHeader ? 'calc(100vh - 2.5rem)' : '100vh', // h-10 = 2.5rem
-        }}
-      >
+      <main className={`${shouldShowSidebar ? 'ml-64' : ''} flex flex-col flex-1`}>
+  
         {showHeader && (
-          <AppHeader showBack={!isLogoHeader} variant={isLogoHeader ? "logo" : "default"} />
+          <div className="sticky top-0 z-50 bg-white">
+            <AppHeader
+              showBack={!isLogoHeader}
+              variant={isLogoHeader ? "logo" : "default"}
+            />
+          </div>
         )}
-        <div className="h-full overflow-auto py-4">
+
+        <div className="flex flex-col flex-1 overflow-auto py-4">
           {children}
         </div>
-      </main>
 
+      </main>
     </div>
   );
 }

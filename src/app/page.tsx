@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Page() {
   return (
-    <div className="min-h-screen flex p-6">
+    <div className="min-h-screen flex px-6">
       {/* Panel lateral (solo desktop) */}
       <div className="hidden md:flex fixed inset-y-0 left-0 w-1/2 bg-linear-to-b from-dark-4 via-dark-3 to-dark-2 px-39 py-12 items-center justify-center z-10">
         <div className="flex flex-col items-center text-center w-50">

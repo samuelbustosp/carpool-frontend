@@ -18,7 +18,6 @@ export default function Results() {
   const router = useRouter();
   const [toast, setToast] = useState<{ message: string; type: 'error' | 'warning' } | null>(null);
 
-
   // Inicializamos desde URL
   const originParam = searchParams.get("origin");
   const destinationParam = searchParams.get("destination");
@@ -194,23 +193,6 @@ export default function Results() {
 
       {feed.length === 0 && loading && (
         <>
-          <div className="border border-gray-2 rounded-2xl p-2 flex items-center gap-3 px-3">
-            <div className="flex flex-col items-center">
-              <div className="h-2 w-2 bg-gray-2 rounded-full animate-pulse" />
-              <div className="w-0.5 h-4 bg-gray-2 my-1 animate-pulse" />
-              <div className="h-2 w-2 bg-gray-2 rounded-full animate-pulse" />
-            </div>
-            <div className="w-full space-y-1">
-              <div className="h-4 w-32 bg-gray-2 rounded animate-pulse" />
-              <div className="w-full border-b bg-gray-2/70 my-2 animate-pulse"></div>
-              <div className="h-4 w-40 bg-gray-2 rounded animate-pulse" />
-            </div>
-          </div>
-          <div className="flex items-center gap-2 animate-pulse">
-            <div className="h-5 w-1/4 bg-gray-2 rounded-lg" />
-            <div className="h-5 w-1/6 bg-gray-2 rounded-lg" />
-            <div className="h-5 w-1/6 bg-gray-2 rounded-lg" />
-          </div>
           {Array.from({ length: 2 }).map((_, i) => <TripSkeleton key={i} />)}
         </>
       )}

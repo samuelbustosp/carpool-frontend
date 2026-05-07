@@ -2,7 +2,7 @@ import DriverTripDetails from "@/modules/trip-details/components/driver/DriverTr
 
 export default function DriverTripDetailsPage(){
   return(
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
           <DriverTripDetails/>
       </div>
   )

@@ -3,7 +3,7 @@ import { UpdateTripForm } from "@/modules/trip/components/update-trip/components
 
 export default function TripEditPage() {
   return(
-    <div className="max-w-lg mx-auto">
+    <div className="max-w-lg mx-auto w-full">
       <UpdateTripForm/>
     </div>
   );

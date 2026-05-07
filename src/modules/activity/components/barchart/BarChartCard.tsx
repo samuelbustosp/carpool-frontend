@@ -1,7 +1,6 @@
 'use client'
 
 import { ErrorAlert } from "@/components/ux/admin/ErrorAlert"
-import { EmptyAlertY } from "@/components/ux/EmptyAlert"
 import { formatPrice } from "@/shared/utils/number"
 import { ChartColumnDecreasing, LucideIcon, OctagonX } from "lucide-react"
 import { DateRange } from "react-day-picker"
@@ -12,6 +11,7 @@ import ChartHeader from "../ChartHeader"
 import ChartFilters from "../ChartFilters"
 import { BarChartSkeleton } from "./BarChartSkeleton"
 import CustomTooltip from "./CustomTooltip"
+import { EmptyAlert } from "@/components/ux/EmptyAlert";
 
 interface BarChartCardProps {
   title: string
@@ -79,12 +79,13 @@ export default function BarChartCard({
             </div>
           ) : data.length === 0 ? (
             <div className="h-full flex items-center justify-center">
-              <EmptyAlertY
+              <EmptyAlert
                 icon={<ChartColumnDecreasing size={32} />}
                 title="No hay datos para mostrar"
                 description={`No se encontraron estadísticas para 
                   ${filter === '7d' ? 'los ' : 'el '}${formatFilterLabel(filter)}.`
                 }
+                variant="Y"
               />
             </div>
           ) : (

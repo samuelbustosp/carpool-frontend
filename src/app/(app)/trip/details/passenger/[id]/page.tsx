@@ -2,7 +2,7 @@ import PassengerTripDetails from "@/modules/trip-details/components/passenger/Pa
 
 export default function PassengerTripDetailsPage(){
   return(
-      <div className="max-w-lg mx-auto">
+      <div className="max-w-lg mx-auto w-full">
           <PassengerTripDetails/>
       </div>
   )

@@ -2,7 +2,7 @@ import UpdateEmailForm from "@/modules/settings/components/account/UpdateEmailFo
 
 export default function UpdateEmailPage() {
   return(
-    <div className="p-4 max-w-md mx-auto space-y-4">
+    <div className="p-4 max-w-md mx-auto space-y-4 w-full">
         <UpdateEmailForm />
     </div>
   )
