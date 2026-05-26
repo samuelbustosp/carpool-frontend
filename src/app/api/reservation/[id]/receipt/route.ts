@@ -1,3 +1,4 @@
+import { API_URL } from "@/constants/api";
 import { NextRequest, NextResponse } from "next/server";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -26,7 +27,7 @@ export async function GET(
     const token = req.cookies.get("token")?.value;
     const { id } = await params;
 
-    const res = await fetch(`${apiUrl}/reservation/${id}/receipt`, {
+    const res = await fetch(`${API_URL}/reservation/${id}/receipt`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
