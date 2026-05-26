@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import debounce from "lodash.debounce";
-import type { DebouncedFunc } from 'lodash'; 
+
 
 // Tipos permitidos para los campos que se pueden validar
 type FieldType = 'username' | 'email' | 'dni' | 'phone';
@@ -15,7 +15,7 @@ export function useFieldValidator(field: FieldType) {
   const [messageType, setMessageType] = useState<MessageType>(null);
 
   // Referencia para guardar la función debounce y poder limpiarla
-  const debouncedValidateRef = useRef<DebouncedFunc<(value: string) => void> | null>(null);
+  const debouncedValidateRef = useRef<ReturnType<typeof debounce> | null>(null);
 
   // Función que hace la validación real (sin debounce)
   const validateFn = useCallback(async (value: string) => {

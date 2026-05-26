@@ -45,10 +45,10 @@ export default function DesktopSidebar() {
   const filteredNavItems = navItems.filter(item => userRoles.includes(item.role ?? 'user'));
 
   return (
-    <aside className="hidden md:flex fixed top-0 left-0 h-screen w-64 bg-dark-5 border-r border-gray-200 dark:border-gray-2 flex-col justify-between px-4 py-8 z-50">
+    <aside className="hidden md:flex fixed top-0 left-0 h-screen w-64 bg-dark-6 border-r border-gray-200 dark:border-gray-2 flex-col justify-between px-4 py-8 z-50">
       {/* Top section: logo y navegación */}
       <div>
-        <Link href={'/profile'} className=" bg-linear-to-tr from-gray-2 via-75% to-transparent rounded-lg py-1 flex items-center justify-start px-2">
+        <Link href={'/profile'} className=" bg-linear-to-tr from-gray-2 via-75% to-dark-6 rounded-lg py-1 flex items-center justify-start px-2">
           <Image
             src={`${R2_PUBLIC_PREFIX}/isologo.svg`}
             alt="Imagen de login"
@@ -88,7 +88,7 @@ export default function DesktopSidebar() {
                   text-gray-9 cursor-not-allowed
                   transition-colors
                   hover:text-gray-1 hover:dark:bg-linear-to-r
-                  hover:dark:from-gray-8 hover:dark:via-gray-8 hover:dark:to-dark-5
+                  hover:dark:from-gray-8 hover:dark:via-gray-8 hover:dark:to-dark-6
                 "
               >
                 <Icon size={20} />
@@ -118,8 +118,8 @@ export default function DesktopSidebar() {
                 href={href}
                 className={`flex items-center gap-3 p-2 rounded-md text-sm transition-colors ${
                   isActive
-                    ? 'text-gray-1 font-medium bg-linear-to-r dark:from-gray-8 dark:via-gray-8 dark:to-dark-5'
-                    : 'text-gray-9 hover:text-gray-1 hover:dark:bg-linear-to-r hover:dark:from-gray-8 hover:dark:via-gray-8 hover:dark:to-dark-5'
+                    ? 'text-gray-1 font-medium bg-linear-to-r dark:from-gray-8 dark:via-gray-8 dark:to-dark-6'
+                    : 'text-gray-9 hover:text-gray-1 hover:dark:bg-linear-to-r hover:dark:from-gray-8 hover:dark:via-gray-8 hover:dark:to-dark-6'
                 }`}
               >
                 <Icon size={20} />
@@ -145,7 +145,7 @@ export default function DesktopSidebar() {
         <Separator color='bg-gray-2'/>
         <button
           onClick={() => setIsDialogOpen(true)}
-          className="text-red-500 hover:bg-red-100 dark:text-gray-6 dark:hover:text-white dark:hover:bg-red-950 dark:bg-gray-8 dark:to-dark-5 px-4 py-2 font-medium transition-colors text-left rounded-md cursor-pointer flex items-center gap-2"
+          className="text-red-500 hover:bg-red-100 dark:text-gray-6 dark:hover:text-white dark:hover:bg-red-950 dark:bg-gray-8 dark:to-dark-6 px-4 py-2 font-medium transition-colors text-left rounded-md cursor-pointer flex items-center gap-2"
         >
           <LogOut size={14} />
           Cerrar sesión

@@ -1,6 +1,7 @@
+import { API_URL } from "@/constants/api";
 import { VoidResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 /**
  * Realizar el pago de una reserva
@@ -12,7 +13,7 @@ export async function POST(req: NextRequest) {
   try {
     const token = req.cookies.get('token')?.value;
 
-    const res = await fetch(`${apiUrl}/reservation/payment`, {
+    const res = await fetch(`${API_URL}/reservation/payment`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json" ,

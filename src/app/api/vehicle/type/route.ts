@@ -1,7 +1,7 @@
 import { VehicleTypeResponseDTO } from "@/modules/vehicle/types/dto/vehicleTypeResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Obtiene la lista de tipos de vehículos disponibles.
@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
 
-    const res = await fetch(`${apiUrl}/vehicle-types`, {
+    const res = await fetch(`${API_URL}/vehicle-types`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

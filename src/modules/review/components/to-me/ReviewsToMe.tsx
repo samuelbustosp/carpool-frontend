@@ -150,13 +150,13 @@ export default function ReviewsToMe(){
             SVGstyle={{ display: "inline" }}
           />
           <span className="text-xs text-gray-11">
-            como {role === "passenger" ? "pasajero" : "chofer"}
+            como {role === "passenger" ? "pasajero" : "conductor"}
           </span>
         </div>
       </div>
       <RoleSelectorHeader
         title="Listado de reseñas"
-        description="Aca podés ver las reseñas que otros choferes y pasajeros te han realizado"
+        description="Aca podés ver las reseñas que otros conductores y pasajeros te han realizado"
         role={role}
         onChangeRole={handleChangeRole}
       />

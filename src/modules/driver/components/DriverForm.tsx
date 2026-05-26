@@ -136,13 +136,13 @@ export function DriverForm() {
         {error && <Alert message={error} />}
 
         {/* Clase de licencia */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="md:col-span-4">
+        <div className="grid grid-cols-4 md:grid-cols-4 gap-4">
+          <div className="col-span-4 md:col-span-4">
             <h1 className="font-semibold">Domicilio</h1>
             <Separator marginY="my-1" color="bg-gray-2"/>
           </div>
           {/* Localidad */}
-          <div className="md:col-span-4">
+          <div className="col-span-4 md:col-span-4">
             <Controller
               name="cityId"
               control={control}
@@ -159,7 +159,7 @@ export function DriverForm() {
             />
           </div>
 
-          <div className="md:col-span-3">
+          <div className="col-span-3 md:col-span-3">
 
             <Input
               label="Calle"
@@ -170,7 +170,7 @@ export function DriverForm() {
               />
           </div>
           
-          <div className="md:col-span-1">
+          <div className="col-span-1 md:col-span-1">
             <Input
               label="Número"
               type="text"
@@ -180,12 +180,12 @@ export function DriverForm() {
               />
           </div>
 
-          <div className="md:col-span-4">
+          <div className="col-span-4 md:col-span-4">
             <h1 className="font-semibold">Datos de la licencia</h1>
             <Separator marginY="my-1" color="bg-gray-2"/>
           </div>
 
-          <div className="md:col-span-2">
+          <div className="col-span-4 md:col-span-2">
             <Controller
               name="licenseClassId"
               control={control}
@@ -218,14 +218,14 @@ export function DriverForm() {
           </div>
 
           {/* Vencimiento */}
-          <div className="md:col-span-2">
+          <div className="col-span-4 md:col-span-2">
             <Input
               label="Vencimiento"
               type="date"
               autoComplete="licenseExpirationDate"
               {...register('licenseExpirationDate')}
               error={errors.licenseExpirationDate?.message}
-              />
+            />
           </div>
         </div>
 

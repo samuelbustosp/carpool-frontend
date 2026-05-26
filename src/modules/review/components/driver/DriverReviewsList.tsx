@@ -9,7 +9,7 @@ export function DriverReviewsList({reviews}:DriverReviewsListProps){
   if(reviews.length === 0){
     return(
       <div className="text-center text-sm text-gray-600 py-10">
-        Este chofer todavia no tiene reseñas.
+        Este conductor todavía no tiene reseñas.
       </div>
     )
   }

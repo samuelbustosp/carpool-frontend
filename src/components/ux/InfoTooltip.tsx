@@ -25,7 +25,7 @@ export default function InfoTooltip({ text }: { text: string }) {
   }, []);
 
   const icon = (
-    <Info size={18} className="text-gray-500 cursor-pointer" />
+    <Info size={18} className="text-gray-11 cursor-pointer" />
   );
 
   // Mobile → Popover
@@ -35,7 +35,7 @@ export default function InfoTooltip({ text }: { text: string }) {
         <PopoverTrigger asChild>
           <button className="rounded-full">{icon}</button>
         </PopoverTrigger>
-        <PopoverContent className="bg-gray-900 text-white rounded-md px-3 py-2 shadow-lg">
+        <PopoverContent className="bg-gray-8 text-white text-sm font-light rounded-md px-3 py-2 shadow-lg">
           {text}
         </PopoverContent>
       </Popover>
@@ -49,7 +49,7 @@ export default function InfoTooltip({ text }: { text: string }) {
         {icon}
       </button>
       </TooltipTrigger>
-      <TooltipContent className="bg-gray-900 text-white rounded-md px-3 py-2 shadow-lg" side="top">{text}</TooltipContent>
+      <TooltipContent className="bg-gray-8 text-white rounded-md px-3 py-2 shadow-lg" side="top">{text}</TooltipContent>
     </Tooltip>
   );
 }

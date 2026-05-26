@@ -2,7 +2,7 @@
 import { SearchTripResponse } from "@/modules/search/types/dto/searchTripResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 export async function GET(req: NextRequest) {
   try {
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
 
     if (cityId) params.append("cityId", cityId);
 
-    const res = await fetch(`${apiUrl}/trip/feed?${params.toString()}`, {
+    const res = await fetch(`${API_URL}/trip/feed?${params.toString()}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -1,8 +1,7 @@
+import { API_URL } from "@/constants/api";
 import { VoidResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
 
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Eliminar a un pasajero de un viaje cuando ya tiene una reserva aceptada
@@ -15,7 +14,7 @@ export async function PUT(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
     const body = await req.json();
 
-    const res = await fetch(`${apiUrl}/reservation/delete-trip-passenger`, {
+    const res = await fetch(`${API_URL}/reservation/delete-trip-passenger`, {
       method: "PUT",
       headers: { 
         "Content-Type": "application/json" ,

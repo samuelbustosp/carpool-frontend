@@ -40,13 +40,13 @@ export function EmptyAlert({
 
       <div className={isY ? "text-center" : ""}>
         <p
-          className="text-base font-medium mb-1"
+          className="text-sm md:text-base font-medium"
         >
           {title}
         </p>
 
         <p
-          className="text-xs text-gray-9 font-inter leading-4"
+          className="text-xs md:text-[13px] text-gray-9 font-inter leading-4"
         >
           {description}
         </p>

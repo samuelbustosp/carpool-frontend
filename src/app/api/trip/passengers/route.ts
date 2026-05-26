@@ -2,7 +2,7 @@
 import { TripPassengersResponseDTO } from "@/modules/trip-details/types/dto/tripPassengersResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Recupera los pasajeros de un viaje finalizado.
@@ -21,7 +21,7 @@ export async function GET(
     const tripId = req.nextUrl.searchParams.get("tripId");
     const token = req.cookies.get('token')?.value;
 
-    const res = await fetch(`${apiUrl}/trip/passengers?tripId=${tripId}`, {
+    const res = await fetch(`${API_URL}/trip/passengers?tripId=${tripId}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       },

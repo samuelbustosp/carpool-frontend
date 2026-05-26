@@ -91,19 +91,11 @@ export function useGeocode() {
       return;
     }
 
-    // Timeout manual (muy importante)
-    const timeoutId = setTimeout(() => {
-      console.warn("Timeout esperando permiso, usando fallback");
-      setCity(FALLBACK_CITY);
-    }, 4000);
-
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        clearTimeout(timeoutId);
         getCityFromCoords(pos.coords.latitude, pos.coords.longitude);
       },
       () => {
-        clearTimeout(timeoutId);
         setError("No se pudo obtener tu ubicación");
         setCity(FALLBACK_CITY);
       },

@@ -53,7 +53,7 @@ export function UserReviewCard({review, passenger, fromMe, handleDelete}: Review
           
           <div className="flex flex-col leading-4">
             <p>{review.completeName}</p>
-            <span className="text-sm text-gray-11"> {passenger ? 'Fue tu chofer el ' : 'Lo llevaste el '} {formatDateTime(review.tripDate)}</span>
+            <span className="text-sm text-gray-11"> {passenger ? 'Fue tu conductor el ' : 'Lo llevaste el '} {formatDateTime(review.tripDate)}</span>
           </div>
         </div>
         {fromMe && handleDelete && (

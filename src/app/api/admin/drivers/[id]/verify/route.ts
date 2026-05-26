@@ -1,7 +1,8 @@
+import { API_URL } from "@/constants/api";
 import { VoidResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 /**
  * Valida o rechaza la licencia de un chofer pendiente.
@@ -24,7 +25,7 @@ export async function PUT(
     const token = req.cookies.get('token')?.value;
     const body = await req.json()
 
-    const res = await fetch(`${apiUrl}/admin/drivers/${id}/verify`, {
+    const res = await fetch(`${API_URL}/admin/drivers/${id}/verify`, {
       method: 'PUT',
       headers: {
         "Content-Type": "application/json",

@@ -51,7 +51,7 @@ function RouteGuardWrapper({ children }: { children: React.ReactNode }) {
       <div className="flex flex-col items-center justify-center min-h-screen gap-3">
         <Spinner />
         <span className="text-sm text-muted-foreground">
-          Verificando sesión...
+          Cargando...
         </span>
       </div>
     );

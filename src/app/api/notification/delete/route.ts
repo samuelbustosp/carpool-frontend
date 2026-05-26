@@ -1,13 +1,12 @@
+import { API_URL } from "@/constants/api";
 import { VoidResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export async function DELETE(req: NextRequest) {
   try {
     const token = req.cookies.get('token')?.value;
 
-    const res = await fetch(`${apiUrl}/notification`, {
+    const res = await fetch(`${API_URL}/notification`, {
       method: "DELETE",
       headers: { 
         "Content-Type": "application/json",

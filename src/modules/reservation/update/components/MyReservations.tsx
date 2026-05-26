@@ -174,8 +174,8 @@ export default function MyReservations() {
 				<Tab value={state} onChange={handleChangeState} tabs={RESERVATION_TABS} />
 				{/* Filtro + Orden */}
 				<div className="flex items-center gap-3">
-					<div className="flex items-center gap-2 text-sm px-3 py-2 rounded-lg bg-gray-8 w-fit">
-						<ListFilter size={20} />
+					<div className="flex items-center gap-2 text-sm px-3 py-1 rounded-lg bg-gray-8 w-fit border border-transparent">
+						<ListFilter size={16} />
 						<p>Filtros</p>
 					</div>
 
@@ -185,14 +185,14 @@ export default function MyReservations() {
 					>
 						<SelectTrigger
 							id="orderBy"
-							className="font-outfit dark:bg-dark-5 flex-1"
+							className="font-outfit dark:bg-dark-5 flex-1 h-8 cursor-pointer"
 						>
 							<SelectValue />
 						</SelectTrigger>
 
-						<SelectContent>
+						<SelectContent className="cursor-pointer">
 							{ORDERS_BY.map((order) => (
-								<SelectItem key={order.value} value={order.value}>
+								<SelectItem key={order.value} value={order.value} className="cursor-pointer">
 									{order.label}
 								</SelectItem>
 							))}
@@ -208,7 +208,7 @@ export default function MyReservations() {
 							value={fromDate ?? ""}
 							onChange={(e) => setFromDate(e.target.value || null)}
 							max={toDate ?? undefined}
-							className="border border-gray-2 rounded px-2 py-1 h-8"
+							className="border border-gray-2 rounded px-2 py-1 h-8 cursor-pointer"
 						/>
 					</div>
 
@@ -219,7 +219,7 @@ export default function MyReservations() {
 							value={toDate ?? ""}
 							min={fromDate ?? undefined}
 							onChange={(e) => setToDate(e.target.value || null)}
-							className="border border-gray-2 rounded px-2 py-1 h-8"
+							className="border border-gray-2 rounded px-2 py-1 h-8 cursor-pointer"
 						/>
 					</div>
 				</div>
@@ -227,6 +227,7 @@ export default function MyReservations() {
 				<div className="mt-4">
 					<ReservationList
 						reservations={reservations?.reservation ?? []}
+						loading={loading}
 						onCancel={handleConfirm}
 						loadingCancelId={loadingCancelId}
 					/>

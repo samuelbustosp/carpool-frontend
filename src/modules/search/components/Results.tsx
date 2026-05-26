@@ -22,8 +22,6 @@ export default function Results() {
   const originParam = searchParams.get("origin");
   const destinationParam = searchParams.get("destination");
   const departureDateParam = searchParams.get("departureDate");
-  const minPriceParam = searchParams.get("minPrice");
-  const maxPriceParam = searchParams.get("maxPrice");
   const orderByRatingParam = searchParams.get("orderByDriverRating");
 
   // Ciudades seleccionadas
@@ -38,11 +36,6 @@ export default function Results() {
 
   // Filtros
   const [departureDate, setDepartureDate] = useState<string | undefined>(departureDateParam ?? undefined);
-  const [minPrice, setMinPrice] = useState<number | undefined>(minPriceParam ? Number(minPriceParam) : undefined);
-  const [maxPrice, setMaxPrice] = useState<number | undefined>(maxPriceParam ? Number(maxPriceParam) : undefined);
-  const maxSeatPrice = feed.length > 0
-    ? Math.max(...feed.map(item => item.seatPrice))
-    : 10000;
   const [orderByDriverRating, setOrderByDriverRating] = useState(orderByRatingParam === "true");
 
   const LIMIT = 10;
@@ -70,8 +63,6 @@ export default function Results() {
         destinationCityId,
       };
       if (departureDate) filters.departureDate = departureDate;
-      if (minPrice !== undefined) filters.minPrice = minPrice;
-      if (maxPrice !== undefined) filters.maxPrice = maxPrice;
       if (orderByDriverRating) filters.orderByDriverRating = orderByDriverRating;
 
       const res = await getTrips(filters, currentSkip);
@@ -113,8 +104,6 @@ export default function Results() {
     originCityId,
     destinationCityId,
     departureDate,
-    minPrice,
-    maxPrice,
     orderByDriverRating,
   ]);
 
@@ -129,12 +118,10 @@ export default function Results() {
     queryParams.set("origin", originCityId.toString());
     queryParams.set("destination", destinationCityId.toString());
     if (departureDate) queryParams.set("departureDate", departureDate);
-    if (minPrice !== undefined) queryParams.set("minPrice", minPrice.toString());
-    if (maxPrice !== undefined) queryParams.set("maxPrice", maxPrice.toString());
     if (orderByDriverRating) queryParams.set("orderByDriverRating", orderByDriverRating.toString());
 
     router.replace(`/search/results?${queryParams.toString()}`);
-  }, [originCityId, destinationCityId, departureDate, minPrice, maxPrice, orderByDriverRating, router, fetchTrips]);
+  }, [originCityId, destinationCityId, departureDate, orderByDriverRating, router, fetchTrips]);
 
 
   useEffect(() => {
@@ -151,8 +138,6 @@ export default function Results() {
   // --- Limpiar filtros ---
   const clearFilters = () => {
     setDepartureDate(undefined);
-    setMinPrice(undefined);
-    setMaxPrice(undefined);
     setOrderByDriverRating(false);
 
     const queryParams = new URLSearchParams();
@@ -181,25 +166,20 @@ export default function Results() {
           normalized.setHours(0, 0, 0, 0);
           setDepartureDate(normalized.toISOString().slice(0, 10));
         }}
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-        maxSeatPrice={maxSeatPrice}
-        onMinPriceChange={setMinPrice}
-        onMaxPriceChange={setMaxPrice}
         sortByRating={orderByDriverRating}
         setSortByRating={setOrderByDriverRating}
         onClearFilters={clearFilters}
       />
 
       {feed.length === 0 && loading && (
-        <>
-          {Array.from({ length: 2 }).map((_, i) => <TripSkeleton key={i} />)}
-        </>
+        <div className="w-full md:min-w-lg">
+          {Array.from({ length: 3 }).map((_, i) => <TripSkeleton key={i} />)}
+        </div>
       )}
 
       <TripList feed={feed} originSearch={originCity} destinationSearch={destinationCity} loading={loading} />
 
-      {feed.length > 0 && loading && <TripSkeleton />}
+      
 
       <div ref={loaderRef} className="h-1" />
 

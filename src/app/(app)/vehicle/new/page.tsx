@@ -2,8 +2,8 @@ import { VehicleForm } from "@/modules/vehicle/components/new-vehicle/VehicleFor
 
 export default function VehicleNewPage(){
   return (
-    <div className="flex flex-col flex-1 items-center max-w-lg w-full">
-      
+    <div className="flex flex-col flex-1 items-center max-w-lg mx-auto w-full">
+
       <VehicleForm />
       
     </div>

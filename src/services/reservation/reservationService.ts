@@ -224,3 +224,38 @@ export async function payReservation(): Promise<VoidResponse> {
     return { data: null, messages: [message], state: "ERROR" };
   }
 }
+
+/**
+ * Descarga el comprobante PDF de una reserva completada.
+ *
+ * Realiza la petición al endpoint de Next.js que actúa como proxy hacia el backend,
+ * convierte la respuesta en un Blob y dispara la descarga en el navegador.
+ *
+ * @param reservationId - Id de la reserva completada
+ * @returns Promise<void>
+ */
+export async function downloadPaymentReceipt(reservationId: number): Promise<void> {
+  try {
+    const res = await fetchWithRefresh(`/api/reservation/${reservationId}/receipt`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      throw new Error("Error al descargar el comprobante");
+    }
+
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `comprobante-carpool.pdf`;
+    a.click();
+
+    URL.revokeObjectURL(url);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Error desconocido";
+    console.error("Error descargando comprobante:", message);
+  }
+}

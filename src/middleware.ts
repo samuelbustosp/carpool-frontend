@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { PUBLIC_PATHS } from "./constants/paths/publicPaths";
 import {verifyTokenWithServer} from './services/auth/authService'
 import { isTokenExpired, parseJwt } from "./shared/utils/jwt";
+import { API_URL } from "./constants/api";
 
 
 export async function middleware(req: NextRequest) {
@@ -50,9 +51,7 @@ export async function middleware(req: NextRequest) {
   // Controlar errores.
   const isValid = await verifyTokenWithServer(token);
   if (!isValid) {
-    const response = redirectToHome(req);
-    clearAuthCookies(response);
-    return response;
+    return redirectToHome(req);
   }
 
   //ROLES
@@ -67,28 +66,33 @@ export async function middleware(req: NextRequest) {
 function redirectToHome(req: NextRequest) {
   const url = req.nextUrl.clone();
   url.pathname = "/";
-  return NextResponse.redirect(url);
+
+  const response = NextResponse.redirect(url);
+
+  clearAuthCookies(response);
+
+  return response;
 }
 
 function clearAuthCookies(res: NextResponse): NextResponse {
   const cookieOptions = {
+    path: "/",
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict' as const,
-    path: '/',
-    maxAge: 0,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict" as const,
+    expires: new Date(0),
   };
 
-  res.cookies.set('token', '', cookieOptions);
-  res.cookies.set('refreshToken', '', cookieOptions);
+  res.cookies.set("token", "", cookieOptions);
+  res.cookies.set("refreshToken", "", cookieOptions);
 
   return res;
 }
 
 async function refreshAccessToken(refreshToken: string) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const res = await fetch(`${apiUrl}/auth/refresh`, {
+    
+    const res = await fetch(`${API_URL}/auth/refresh`, {
       method: "POST",
       headers: { Authorization: `Bearer ${refreshToken}` },
     });

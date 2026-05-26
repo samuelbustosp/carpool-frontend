@@ -2,8 +2,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { parseJwt } from "@/shared/utils/jwt";
 import { GoogleLoginResponse } from "@/modules/auth/types/dto/googleAuthResponseDTO";
+import { API_URL } from "@/constants/api";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 /**
  * Inicia sesión mediante Google.
@@ -17,9 +18,9 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
  */
 export async function POST(req: NextRequest) {
   try {
-    const { idToken } = await req.json();
+    const { accessToken } = await req.json();
 
-    if (!idToken) {
+    if (!accessToken) {
       return NextResponse.json({ 
         data: null, 
         messages: ["Client token no encontrado"], 
@@ -27,10 +28,10 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    const res = await fetch(`${apiUrl}/auth-google`, {
+    const res = await fetch(`${API_URL}/auth-google`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ idToken }),
+      body: JSON.stringify({ accessToken }),
     });
 
     if (!res.ok) {

@@ -46,6 +46,10 @@ export function VehicleForm() {
     }
   })
 
+  const {
+    formState: { isValid }
+  } = step2Form
+
   const handleNextFromStep1 = () => {
     setStep(2)
   }
@@ -62,6 +66,7 @@ export function VehicleForm() {
       const baseData: vehicleFormData = {
         ...step2Form.getValues(),
         ...data,
+        color: data.color.replace("#", "").toLowerCase(),
         vehicleTypeId: step1Form.getValues().vehicleTypeId, // Nota el guion bajo
       };
       
@@ -106,7 +111,7 @@ export function VehicleForm() {
             </div>
             
 
-            <Button type="submit" variant="primary" className="w-full">
+            <Button type="submit" variant="primary" className="text-sm font-medium">
               Siguiente
             </Button>
           </form>
@@ -123,67 +128,124 @@ export function VehicleForm() {
             </p>
           </div>
           {error && <Alert message={error} />}
-          <form onSubmit={step2Form.handleSubmit(handleSubmitFinal)} className="flex flex-col gap-4">
-            {/* Marca y modelo */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                label="Marca"
-                {...step2Form.register("brand")}
-                error={step2Form.formState.errors.brand?.message}
-              />
-              <Input
-                label="Modelo"
-                {...step2Form.register("model")}
-                error={step2Form.formState.errors.model?.message}
-              />
-            </div>
-
-            {/* Patente y año */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                label="Patente o dominio"
-                {...step2Form.register("domain")}
-                error={step2Form.formState.errors.domain?.message}
-              />
-              <Input
-                label="Año"
-                type="year"
-                placeholder="AAAA"
-                {...step2Form.register("year", { valueAsNumber: true })}
-                error={step2Form.formState.errors.year?.message}
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Color */}
-              <Input
-                label="Color"
-                {...step2Form.register("color")}
-                error={step2Form.formState.errors.color?.message}
-              />
-              
-              {/* Capacidad */}
-              <div>
-                <div className="flex items-center gap-1">
-                  <label>Asientos</label>    
-                  <InfoTooltip text="Ingresá la cantidad de asientos total del vehiculo"></InfoTooltip>          
+          <form onSubmit={step2Form.handleSubmit(handleSubmitFinal)} className="flex flex-col flex-1 justify-between">
+              <div className="flex flex-col flex-1 gap-4">
+                {/* Marca y modelo */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input
+                    label="Marca"
+                    {...step2Form.register("brand")}
+                    error={step2Form.formState.errors.brand?.message}
+                  />
+                  <Input
+                    label="Modelo"
+                    {...step2Form.register("model")}
+                    error={step2Form.formState.errors.model?.message}
+                  />
                 </div>
-                <Input  
-                  type="number" {...step2Form.register('availableSeats', { valueAsNumber: true })} 
-                  error={step2Form.formState.errors.availableSeats?.message} 
-                />
-              </div>
-              
-            </div>
 
-            {/* Botones */}
-             <div className="flex gap-4 mt-2">
-              <Button type="button" variant="outline" className="w-full" onClick={handlePrev}>Volver</Button>
-              <Button type="submit" variant="primary" className="w-full" disabled={loading}>
-                {loading ?  'Guardando...' :  'Guardar'}
-              </Button>
-            </div>
-          </form>
+                {/* Patente y año */}
+                <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4">
+                  <div className="md:col-span-2 mb-4 md:mb-0">
+                    <Input
+                      label="Patente o dominio"
+                      {...step2Form.register("domain")}
+                      error={step2Form.formState.errors.domain?.message}
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-2 col-span-2 gap-4">
+                    <Input
+                      label="Año"
+                      type="year"
+                      placeholder="AAAA"
+                      {...step2Form.register("year", { valueAsNumber: true })}
+                      error={step2Form.formState.errors.year?.message}
+                      className="col-span-1"
+                    />
+                    <div>
+                      <div className="flex items-center gap-1 mb-1">
+                        <label className="text-sm">Asientos</label>    
+                        <InfoTooltip 
+                          text="Ingresá la cantidad de asientos total del vehiculo"
+                        />      
+                      </div>
+                      <Input  
+                        type="number" {...step2Form.register('availableSeats', { valueAsNumber: true })} 
+                        error={step2Form.formState.errors.availableSeats?.message} 
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <label className="text-sm font-medium">Color</label>
+
+                  <div className="flex items-center gap-3">
+                    <label
+                      htmlFor="vehicle-color"
+                      className="
+                        relative w-10 h-10 rounded-2xl overflow-hidden
+                        border-gray-2 border-2 cursor-pointer
+                        hover:scale-105 transition-transform
+                      "
+                    >
+                      <input
+                        id="vehicle-color"
+                        type="color"
+                        {...step2Form.register("color")}
+                        className="
+                          absolute inset-0 opacity-0 cursor-pointer
+                        "
+                      />
+
+                      <div
+                        className="w-full h-full"
+                        style={{
+                          backgroundColor: step2Form.watch("color") || "#ffffff",
+                        }}
+                      />
+                    </label>
+
+                    <div className="flex flex-col justify-center leading-none">
+                      <span className="text-sm text-gray-11">
+                        Color seleccionado
+                      </span>
+
+                      <span className="font-medium">
+                        {step2Form.watch("color")}
+                      </span>
+                    </div>
+                  </div>
+
+                  {step2Form.formState.errors.color?.message && (
+                    <p className="text-sm text-red-500">
+                      {step2Form.formState.errors.color?.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+              {/* Botones */}
+              <div className="flex gap-4 md:mb-4">
+                <button 
+                  type="button" 
+                  className="flex-1 px-3 text-sm border border-gray-2 rounded-lg text-gray-11 
+                    hover:bg-gray-7 hover:text-white cursor-pointer" 
+                  onClick={handlePrev}
+                >
+                  Volver
+                </button>
+                <button 
+                  type="submit" 
+                  className="flex-1 px-3 py-2 text-sm bg-gray-11 hover:bg-white hover:text-black text-gray-8 rounded-lg
+                    cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed
+                  " 
+                  disabled={!isValid ||loading}
+                >
+                  {loading ?  'Guardando...' :  'Guardar'}
+                </button>
+              </div>
+            </form>
         </>
       )}
     </div>

@@ -1,9 +1,9 @@
 
+import { API_URL } from "@/constants/api";
 import { TopCityStatResponse } from "@/modules/admin/dashboard/types/dto/topCityStatResponse";
 import { buildQuery } from "@/shared/utils/query";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Obtiene el top de ciudades como origen.
@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
 
     const query = buildQuery({limit})
 
-    const res = await fetch(`${apiUrl}/admin/stats/top/origin${query}`, {
+    const res = await fetch(`${API_URL}/admin/stats/top/origin${query}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       },

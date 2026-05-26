@@ -2,7 +2,7 @@
 import { CurrentTripResponseDTO } from "@/modules/current-trip/types/dto/currentTripResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Obtiene el viaje en curso de un chofer
@@ -19,7 +19,7 @@ export async function GET(
   try {
     const token = req.cookies.get('token')?.value;
 
-    const res = await fetch(`${apiUrl}/trip/current-trip`, {
+    const res = await fetch(`${API_URL}/trip/current-trip`, {
       headers: {
         "Content-Type": "application/json",
         'Authorization': `Bearer ${token}`

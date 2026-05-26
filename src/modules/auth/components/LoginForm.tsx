@@ -1,17 +1,18 @@
 'use client'
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useAuth } from "@/contexts/authContext" 
-import { CredentialResponse, GoogleLogin } from "@react-oauth/google"
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
-import Link from "next/link"
-import { LoginData, loginSchema } from "../schemas/loginSchema"
-import { Alert } from "@/components/ux/Alert"
-import { Input } from "@/components/ux/Input"
-import { Button } from "@/components/ux/Button"
-import Spinner from "@/components/ux/Spinner"
+import { Alert } from "@/components/ux/Alert";
+import { Button } from "@/components/ux/Button";
+import { Input } from "@/components/ux/Input";
+import Spinner from "@/components/ux/Spinner";
+import { useAuth } from "@/contexts/authContext";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useGoogleLogin } from "@react-oauth/google";
+import Link from "next/link";
+import { useState } from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
+import { LoginData, loginSchema } from "../schemas/loginSchema";
 
 
 export function LoginForm() {
@@ -29,6 +30,22 @@ export function LoginForm() {
     defaultValues: {
       username: '',
       password: ''
+    }
+  })
+
+  const googleLogin = useGoogleLogin({
+    flow: 'implicit',
+
+    onSuccess: async (tokenResponse) => {
+      try {
+        await authGoogle(tokenResponse.access_token)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    onError: () => {
+      setError('Error en autenticación con Google')
     }
   })
   
@@ -62,29 +79,6 @@ export function LoginForm() {
       }
       setError(message || 'Error al iniciar sesión');
     }
-  }
-
-  const onGoogleSuccess = async (credentialResponse: CredentialResponse) => {
-    if (!credentialResponse.credential) {
-      setError('Error: no se recibió credencial de Google')
-      return
-    }
-
-    setError(null)
-    try {
-      await authGoogle(credentialResponse.credential)
-    } catch (error: unknown) {
-      let message = "Error desconocido";
-
-      if (error instanceof Error) {
-        message = error.message;
-      }
-      setError(message || 'Error al iniciar sesión con Google')
-    }
-  }
-
-  const onGoogleError = () => {
-    setError('Error en autenticación con Google')
   }
 
   return (
@@ -148,14 +142,16 @@ export function LoginForm() {
         <div className="flex-1 h-px bg-gray-4/50" />
       </div>
       
-      <GoogleLogin
-        onSuccess={onGoogleSuccess}
-        onError={onGoogleError}
-        text="continue_with"
-        shape="pill"
-        size="large"
-        width="100%"
-      />
+      <button
+        type="button"
+        className="flex items-center justify-center gap-3 py-3 w-full 
+          rounded-full border bg-gray-8 border-gray-2/80 text-sm font-medium
+          text-gray-11 hover:bg-gray-7 hover:text-white transition cursor-pointer"
+        onClick={() => googleLogin()}
+      >
+        <FcGoogle size={20} />
+        Continuar con Google
+      </button>
 
       <p className="w-full text-center text-sm text-gray-4 font-inter">
         Al hacer clic en continuar, aceptás nuestros

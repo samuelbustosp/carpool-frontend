@@ -1,7 +1,7 @@
 import { TripPriceCalculationResponseDTO } from "@/modules/trip/types/dto/tripResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Metodo para calcular el precio de publicacion de un asiento de un viaje
@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const res = await fetch(`${apiUrl}/trip/calculate-price-trip?seatPrice=${seatPrice}&availableCurrentSeats=${availableSeats}`, {
+    const res = await fetch(`${API_URL}/trip/calculate-price-trip?seatPrice=${seatPrice}&availableCurrentSeats=${availableSeats}`, {
       headers: { 
         'Authorization': `Bearer ${token}`
       },

@@ -168,7 +168,7 @@ export function TripPassengerCard({ trip, openMenuTripId, setOpenMenuTripId}: Tr
                 '
               >
                 <Star size={16} />
-                Reseñar al chofer
+                Reseñar al conductor
               </button>
             )}
           </div>

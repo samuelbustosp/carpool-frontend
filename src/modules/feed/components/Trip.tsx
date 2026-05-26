@@ -7,9 +7,10 @@ import Image from "next/image";
 import RouteLine from "./RouteLine";
 import { SearchData } from "@/modules/search/types/search";
 import { City } from "@/models/city";
-import { capitalizeWords, formatTime, formatTimeRounded } from "@/shared/utils/string";
+import { capitalize, capitalizeWords, formatTime, formatTimeRounded } from "@/shared/utils/string";
 import { formatPrice } from "@/shared/utils/number";
 import Separator from "@/components/ux/Separator";
+import { getRatingColor } from "@/modules/reservation/create/components/Reservation";
 
 
 interface TripCardProps {
@@ -59,7 +60,7 @@ export default function Trip({ trip, currentCity, originSearch, destinationSearc
   const isRealStop = originSearchStop?.start === false && destinationSearchStop?.destination===false;
 
   return (
-    <div  className={`trip-card mb-4 p-4 border border-gray-2 rounded-lg shadow-sm transition-all duration-200 ${
+    <div  className={`trip-card mb-4 p-4 border border-gray-2 hover:bg-gray-8/40 hover:border-gray-11/50 rounded-xl shadow-sm transition-all duration-200 ${
         isIntermediate
           ? "bg-gray-2/20"
           : "border-gray-2"
@@ -83,25 +84,25 @@ export default function Trip({ trip, currentCity, originSearch, destinationSearc
               {/* Fila de ciudades */}
               {isActualOrigin ? 
                 <div>
-                  <p className="text-sm">{capitalizeWords(originStop?.cityName ?? '')}</p>
-                  <p className="text-xs text-gray-11">{capitalizeWords(originStop?.observation ?? '')}</p>
+                  <p className="text-sm truncate">{capitalizeWords(originStop?.cityName ?? '')}</p>
+                  <p className="text-xs text-gray-11 truncate">{capitalize(originStop?.observation ?? '')}</p>
                 </div>
               : 
                 <div>
-                  <p className="text-sm">{capitalizeWords(originSearchStop?.cityName ?? '')}</p>
-                  <p className="text-xs text-gray-11">{capitalizeWords(originSearchStop?.observation ?? '')}</p>
+                  <p className="text-sm truncate">{capitalizeWords(originSearchStop?.cityName ?? '')}</p>
+                  <p className="text-xs text-gray-11 truncate">{capitalizeWords(originSearchStop?.observation ?? '')}</p>
                 </div>
               }
               
               {isActualDestination ?
                 <div>
-                  <p className="text-sm">{capitalizeWords(destinationStop?.cityName ?? '')}</p>
-                  <p className="text-xs text-gray-11">{capitalizeWords(destinationStop?.observation ?? '')}</p>
+                  <p className="text-sm truncate">{capitalizeWords(destinationStop?.cityName ?? '')}</p>
+                  <p className="text-xs text-gray-11 truncate">{capitalize(destinationStop?.observation ?? '')}</p>
                 </div>
               : 
                 <div>
-                  <p className="text-sm">{capitalizeWords(destinationSearchStop?.cityName ?? '')}</p>
-                  <p className="text-xs text-gray-11">{capitalizeWords(destinationSearchStop?.observation ?? '')}</p>
+                  <p className="text-sm truncate">{capitalizeWords(destinationSearchStop?.cityName ?? '')}</p>
+                  <p className="text-xs text-gray-11 truncate">{capitalize(destinationSearchStop?.observation ?? '')}</p>
                 </div>
               }
               
@@ -153,24 +154,21 @@ export default function Trip({ trip, currentCity, originSearch, destinationSearc
           </div>
           
           <div className="border-l border-gray-2 px-4">
-            <p
-              className={`flex items-center gap-1 ${
-                trip.driverInfo.rating >= 4
-                  ? "text-success"
-                  : trip.driverInfo.rating >= 3
-                  ? "text-warning"
-                  : "text-error"
-              }`}
-            >
-              {trip.driverInfo.rating}
-              <span>
+            <p className="text-sm flex w-fit items-center gap-1 bg-gray-2 text-gray-1/75 rounded px-2">
+              <span className={`flex items-center gap-1 ${getRatingColor(trip.driverInfo.rating)
+              }`}>
                 <Star size={12} fill="currentColor" />
               </span>
+              {trip.driverInfo.rating.toFixed(1)}
             </p>
           </div>
         </div>
        
-        <ChevronRight size={20} strokeWidth={1}/>
+        
+          
+        <ChevronRight size={20} strokeWidth={1} />
+        
+        
 
       </div>
       

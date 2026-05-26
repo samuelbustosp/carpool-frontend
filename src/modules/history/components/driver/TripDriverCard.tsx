@@ -161,7 +161,7 @@ export function TripDriverCard({ trip ,onError, onSuccess, openMenuTripId, setOp
   const { label, Icon, className, disabled} = config;
  
   return (
-    <div  className="trip-card mb-4 p-4 border border-gray-2 rounded-lg shadow-sm transition-all duration-20">
+    <div  className="mb-4 p-4 border border-gray-2 rounded-lg shadow-sm transition-all duration-20">
       {/* Ruta */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2 font-semibold text-sm">

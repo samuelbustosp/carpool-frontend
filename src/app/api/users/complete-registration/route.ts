@@ -3,7 +3,7 @@ import { VoidResponse } from "@/shared/types/response";
 import { parseJwt } from "@/shared/utils/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Completa el registro de un usuario.
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    const res = await fetch(`${apiUrl}/users/complete-registration`, {
+    const res = await fetch(`${API_URL}/users/complete-registration`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
 
     if (refreshToken) {
       const decoded = parseJwt(refreshToken);
-      console.log('decoded',decoded)
+
       const iat = Number(decoded?.iat);
       const exp = Number(decoded?.exp);
       const maxAge = exp > iat ? exp - iat : 60 * 60 * 2;

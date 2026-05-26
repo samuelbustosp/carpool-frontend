@@ -1,7 +1,7 @@
 import { TripHistoryUserResponse } from "@/modules/history/types/dto/TripHistoryUserResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 
 export async function GET(req: NextRequest) {
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
 
     const query = params.toString() ? `?${params.toString()}` : "";
 
-    const res = await fetch(`${apiUrl}/trip/history-trip-user${query}`, {
+    const res = await fetch(`${API_URL}/trip/history-trip-user${query}`, {
       headers: { 
         "Content-Type": "application/json" ,
         'Authorization': `Bearer ${token}`

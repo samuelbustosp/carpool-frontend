@@ -1,8 +1,7 @@
+import { API_URL } from "@/constants/api";
 import { PassengerStatResponse } from "@/modules/activity/types/dto/PassengerStatResponse";
 import { buildQuery } from "@/shared/utils/query";
 import { NextRequest, NextResponse } from "next/server";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Obtiene las estadísticas de kilómetros realizados por el pasajero
@@ -25,7 +24,7 @@ export async function GET(req: NextRequest) {
 
     const query = buildQuery({fromDate, toDate, groupBy})
 
-    const res = await fetch(`${apiUrl}/stats/passenger/km${query}`, {
+    const res = await fetch(`${API_URL}/stats/passenger/km${query}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       },

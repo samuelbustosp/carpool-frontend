@@ -2,7 +2,7 @@ import { VoidResponse } from "@/shared/types/response";
 import { VehicleResponseDTO } from "@/modules/vehicle/types/dto/vehicleResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Obtiene los vehículos del usuario o un vehículo específico por ID.
@@ -20,8 +20,8 @@ export async function GET(req: NextRequest) {
     const id = searchParams.get("id");
 
     const endpoint = id
-      ? `${apiUrl}/vehicles/${id}`
-      : `${apiUrl}/vehicles/my-vehicles`;
+      ? `${API_URL}/vehicles/${id}`
+      : `${API_URL}/vehicles/my-vehicles`;
 
     const res = await fetch(endpoint, {
       headers: {
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
     const body = await req.json();
 
-    const res = await fetch(`${apiUrl}/vehicles`, {
+    const res = await fetch(`${API_URL}/vehicles`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json" ,
@@ -117,7 +117,7 @@ export async function DELETE(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
 
-    const res = await fetch(`${apiUrl}/vehicles/${id}`, {
+    const res = await fetch(`${API_URL}/vehicles/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -174,7 +174,7 @@ export async function PUT(req: NextRequest) {
 
     const body = await req.json();
    
-    const res = await fetch(`${apiUrl}/vehicles/${id}`, {
+    const res = await fetch(`${API_URL}/vehicles/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

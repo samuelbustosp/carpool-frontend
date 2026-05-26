@@ -1,7 +1,8 @@
+import { API_URL } from "@/constants/api";
 import { DriverPendingResponse } from "@/modules/admin/licenses/types/dto/driverPendingResponse";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 /**
  * Recupera los todos los usuarios que tengan pendiente la verificacion de la licencia.
@@ -20,7 +21,7 @@ export async function GET(req: NextRequest) {
     const skip = searchParams.get("skip");
     const orderBy = searchParams.get("orderBy");
 
-    const res = await fetch(`${apiUrl}/admin/drivers/pending?skip=${skip}&orderBy=${orderBy}`, {
+    const res = await fetch(`${API_URL}/admin/drivers/pending?skip=${skip}&orderBy=${orderBy}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       },
