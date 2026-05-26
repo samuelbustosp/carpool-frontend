@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { parseJwt } from "@/shared/utils/jwt";
 import { TokensResponse } from "@/shared/types/response";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Actualiza el correo electrónico de un usuario.
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
 
     // Llamada al backend con interceptor para refresco de tokens
-    const res = await fetchWithRefresh(`${apiUrl}/users/confirm-email-change`, {
+    const res = await fetchWithRefresh(`${API_URL}/users/confirm-email-change`, {
       method: "POST",
       headers: { 
         'Authorization': `Bearer ${token}`,

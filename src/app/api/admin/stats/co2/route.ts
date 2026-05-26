@@ -1,8 +1,9 @@
 
+import { API_URL } from "@/constants/api";
 import { AdminCO2StatResponse } from "@/modules/admin/dashboard/types/dto/adminCO2Response";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 /**
  * Obtiene las estadísticas de CO2 total ahorrado en la plataforma.
@@ -18,7 +19,7 @@ export async function GET(req: NextRequest) {
     
     const token = req.cookies.get('token')?.value;
 
-    const res = await fetch(`${apiUrl}/admin/stats/co2`, {
+    const res = await fetch(`${API_URL}/admin/stats/co2`, {
       headers: {
         'Authorization': `Bearer ${token}`
       },

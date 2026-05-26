@@ -48,10 +48,14 @@ export default function MyTripsList({myTrips}: MyTripListProps) {
 
     if (myTrips.length === 0) {
         return (
-            <EmptyAlert
-              icon={<MapPinOff size={32} />}
-              title="No tienes viajes programados"
-            />
+            <div className="bg-dark-5 h-48 rounded-2xl flex items-center border border-gray-2/50">
+                <EmptyAlert
+                    icon={<MapPinOff size={32} />}
+                    title="No tienes viajes programados"
+                    description="Tus próximos viajes aparecerán aquí."
+                />
+            </div>
+            
         );
       }
 

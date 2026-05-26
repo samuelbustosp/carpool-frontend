@@ -4,8 +4,7 @@ interface TripDetailSkeletonProps {
 }
 export function TripDetailSkeleton({reservationButton = true}:TripDetailSkeletonProps) {
   return (
-    <div className="flex flex-col items-center w-full max-w-lg mx-auto h-screen animate-pulse">
-
+    <div className="flex flex-col items-center w-full max-w-lg mx-auto  animate-pulse">
       <div
         style={{
           display: "grid",
@@ -13,7 +12,7 @@ export function TripDetailSkeleton({reservationButton = true}:TripDetailSkeleton
           gridTemplateRows: "repeat(11, 1fr)",
           gap: "8px",
         }}
-        className="w-full h-full mt-6"
+        className="w-full h-full"
       >
         {/* Disponibilidad */}
         <div className="bg-gray-6 dark:bg-gray-8 flex flex-col rounded-xl p-3 col-span-5 row-span-2">

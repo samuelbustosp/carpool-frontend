@@ -1,7 +1,6 @@
+import { API_URL } from "@/constants/api";
 import { MediaResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Obtiene la imagen de perfil de un usuario
@@ -16,7 +15,7 @@ export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
 
-    const res = await fetch(`${apiUrl}/media/profile`, {
+    const res = await fetch(`${API_URL}/media/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -63,7 +62,7 @@ export async function POST(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
     const formData = await req.formData();
 
-    const res = await fetch(`${apiUrl}/media/profile`, {
+    const res = await fetch(`${API_URL}/media/profile`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -111,7 +110,7 @@ export async function DELETE(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
 
-    const res = await fetch(`${apiUrl}/media/profile`, {
+    const res = await fetch(`${API_URL}/media/profile`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,

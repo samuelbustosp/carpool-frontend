@@ -95,7 +95,13 @@ export function TripDetail({
                 year: 'numeric',   
               })}
             </span>
-            <span className="text-2xl font-bold">{new Date(startDateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} hs</span>
+            <span className="text-2xl font-bold">
+              {new Date(startDateTime).toLocaleTimeString('es-AR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+              })} hs
+            </span>
           </p>
           <p className="flex flex-col items-start text-right min-w-22.5 text-gray-7 dark:text-gray-1">
             <span className="font-medium text-lg">Precio</span> 

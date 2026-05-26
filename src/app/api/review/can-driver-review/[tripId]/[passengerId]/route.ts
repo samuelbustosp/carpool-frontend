@@ -1,7 +1,7 @@
+import { API_URL } from "@/constants/api";
 import { BooleanResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Ddeterminar si el usuario en sesion puede realizar una reseña a un chofer de un determinado viaje
@@ -18,7 +18,7 @@ export async function GET(
     const token = req.cookies.get('token')?.value;
 
 
-    const res = await fetch(`${apiUrl}/review/can-driver-review/${tripId}/${passengerId}`, {
+    const res = await fetch(`${API_URL}/review/can-driver-review/${tripId}/${passengerId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

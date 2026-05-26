@@ -3,8 +3,9 @@ import { DriverResponse } from "@/modules/driver/types/dto/driverResponseDTO";
 
 import { NextRequest, NextResponse } from "next/server";
 import { DriverDetailsResponseDTO } from "@/modules/driver/types/dto/driverDetailsResponse";
+import { API_URL } from "@/constants/api";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 /**
  * Obtiene los datos del conductor en sesion
@@ -28,7 +29,7 @@ export async function GET(req: NextRequest) {
   try {
   
     // Llamar al backend
-    const res = await fetch(`${apiUrl}/drivers`, {
+    const res = await fetch(`${API_URL}/drivers`, {
       method: "GET",
       headers: { 
         'Authorization': `Bearer ${token}`
@@ -67,7 +68,7 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
 
     // Llamada al backend con interceptor para refresco de tokens
-    const res = await fetchWithRefresh(`${apiUrl}/drivers`, {
+    const res = await fetchWithRefresh(`${API_URL}/drivers`, {
       method: "POST",
       headers: {
         'Authorization': `Bearer ${token}`

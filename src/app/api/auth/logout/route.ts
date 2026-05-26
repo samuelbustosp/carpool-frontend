@@ -1,7 +1,7 @@
+import { API_URL } from '@/constants/api';
 import { VoidResponse } from '@/shared/types/response';
 import { NextRequest, NextResponse } from 'next/server'
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Cierra la sesión de un usuario.
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Llamar al backend para hacer logout e invalidar el token
-    const res = await fetch(`${apiUrl}/auth/logout`, {
+    const res = await fetch(`${API_URL}/auth/logout`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,

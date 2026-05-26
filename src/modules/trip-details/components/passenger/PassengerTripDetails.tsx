@@ -1,6 +1,6 @@
 'use client'
 
-import { EmptyAlert } from "@/components/ux/EmptyAlert";
+import { ErrorAlert } from "@/components/ux/admin/ErrorAlert";
 import { R2_PUBLIC_PREFIX } from "@/constants/imagesR2";
 import { baggageOptions } from "@/modules/trip/components/new-trip/TripForm";
 import { TripRoutePreview } from "@/modules/trip/components/new-trip/TripRoutePreview";
@@ -29,23 +29,24 @@ export default function PassengerTripDetails() {
   if (loading) 
     return (
       <TripDetailSkeleton reservationButton={false}/>
-    )
+  )
+
+  
   if (error) return (
     <div className="my-50">
-      <EmptyAlert
+      <ErrorAlert
         icon={<CircleX size={32} />}
         title="Error inesperado"
         description={error ?? "Lo sentimos ocurrió un error inesperado."}
       />
     </div>
-
   );
 
   return (
-    <div className="flex flex-col items-center w-full max-w-lg mx-auto mt-2">
+    <div className="flex flex-col items-center w-full max-w-lg mx-auto">
       {trip &&
         <div
-          className="w-full h-full grid grid-cols-9 auto-rows-auto gap-2 md:mt-4 mb-4"
+          className="w-full h-full grid grid-cols-9 auto-rows-auto gap-2"
         >
           
           <div className="col-span-5 row-span-2 bg-gray-6 dark:bg-gray-8 flex flex-col justify-center text-center rounded-xl p-3">

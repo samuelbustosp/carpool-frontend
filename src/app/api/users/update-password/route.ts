@@ -3,7 +3,7 @@ import { TokensResponse } from "@/shared/types/response";
 import { parseJwt } from "@/shared/utils/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Actualiza el la contraseña de un usuario.
@@ -24,7 +24,7 @@ export async function PUT(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
 
      // Llamada al backend con interceptor para refresco de tokens
-    const res = await fetchWithRefresh(`${apiUrl}/users/update-password`, {
+    const res = await fetchWithRefresh(`${API_URL}/users/update-password`, {
       method: "PUT",
       headers: { 
         'Authorization': `Bearer ${token}`,

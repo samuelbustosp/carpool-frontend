@@ -1,19 +1,19 @@
 'use client'
 
-import { Input } from "@/components/ux/Input"
-import { deleteVehicle, updateVehicle } from "@/services/vehicle/vehicleService"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
-import { CircleX } from "lucide-react"
-import { VehicleTypeList } from "../vehicle-type/VehicleTypeList"
-import { Alert } from "@/components/ux/Alert"
-import { Button } from "@/components/ux/Button"
-import { AlertDialog } from "@/components/ux/AlertDialog"
-import { CompleteRegisterVehicleData, completeRegisterVehicleSchema } from "../../schemas/vehicleSchema"
-import { vehicleFormData } from "../../types/vehicle"
-import { Vehicle } from "@/models/vehicle"
+import { Alert } from "@/components/ux/Alert";
+import { AlertDialog } from "@/components/ux/AlertDialog";
+import { Input } from "@/components/ux/Input";
+import { Vehicle } from "@/models/vehicle";
+import { deleteVehicle, updateVehicle } from "@/services/vehicle/vehicleService";
+import { formatDomain } from "@/shared/utils/domain";
+import { capitalizeWords } from "@/shared/utils/string";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { CompleteRegisterVehicleData, completeRegisterVehicleSchema } from "../../schemas/vehicleSchema";
+import { vehicleFormData } from "../../types/vehicle";
+import { VehicleTypeList } from "../vehicle-type/VehicleTypeList";
 
 export function VehicleUpdateForm({ vehicle }: { vehicle?: Vehicle }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -41,11 +41,11 @@ export function VehicleUpdateForm({ vehicle }: { vehicle?: Vehicle }) {
     if (vehicle) {
       const values = {
         vehicleTypeId: vehicle.vehicleTypeId,
-        domain: vehicle.domain,
-        brand: vehicle.brand,
-        model: vehicle.model,
+        domain: formatDomain(vehicle.domain),
+        brand: capitalizeWords(vehicle.brand),
+        model: capitalizeWords(vehicle.model),
         year: vehicle.year,
-        color: vehicle.color,
+        color: capitalizeWords(vehicle.color),
         availableSeats: vehicle.availableSeats
       };
 
@@ -91,7 +91,7 @@ export function VehicleUpdateForm({ vehicle }: { vehicle?: Vehicle }) {
         brand: values.brand,
         model: values.model,
         year: values.year,
-        color: values.color,
+        color: values.color.replace("#", "").toLowerCase(),
         availableSeats: values.availableSeats,
         domain: values.domain,
         vehicleTypeId: values.vehicleTypeId,
@@ -156,7 +156,7 @@ export function VehicleUpdateForm({ vehicle }: { vehicle?: Vehicle }) {
           })}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
           <Input
             label="Marca"
             {...vehicleForm.register("brand")}
@@ -169,10 +169,10 @@ export function VehicleUpdateForm({ vehicle }: { vehicle?: Vehicle }) {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="md:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4">
+          <div className="col-span-1 md:col-span-2 mb-4 md:mb-0">
             <Input
-              label="Patente o dominio"
+              label="Patente"
               {...vehicleForm.register("domain")}
               error={errors.domain?.message}
               disabled={!!vehicle}
@@ -194,27 +194,68 @@ export function VehicleUpdateForm({ vehicle }: { vehicle?: Vehicle }) {
             />
           </div>
         </div>
+        
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-medium">Color</label>
 
-        <Input
-          label="Color"
-          {...vehicleForm.register("color")}
-          error={errors.color?.message}
-        />
+          <div className="flex items-center gap-3">
+            <label
+              htmlFor="vehicle-color"
+              className="
+                relative w-10 h-10 rounded-2xl overflow-hidden
+                border-gray-2 border-2 cursor-pointer
+                hover:scale-105 transition-transform
+              "
+            >
+              <input
+                id="vehicle-color"
+                type="color"
+                {...vehicleForm.register("color")}
+                className="
+                  absolute inset-0 opacity-0 cursor-pointer
+                "
+              />
 
-        <div className="grid grid-cols-3 gap-4">
-          <Button
+              <div
+                className="w-full h-full"
+                style={{
+                  backgroundColor: vehicleForm.watch("color") || "#ffffff",
+                }}
+              />
+            </label>
+
+            <div className="flex flex-col justify-center leading-none">
+              <span className="text-sm text-gray-11">
+                Color seleccionado
+              </span>
+
+              <span className="font-medium">
+                {vehicleForm.watch("color")}
+              </span>
+            </div>
+          </div>
+
+          {errors.color?.message && (
+            <p className="text-sm text-red-500">
+              {errors.color.message}
+            </p>
+          )}
+        </div>
+        
+
+        <div className="grid grid-cols-4 gap-2">
+          <button
             type="button"
-            variant="danger"
-            className="flex items-center gap-1"
+            className="bg-red-500/20 hover:bg-red-500/30 text-gray-11 hover:text-white 
+            flex col-span-2 items-center gap-1 rounded-lg px-2 justify-center cursor-pointer"
             onClick={() => setIsDialogOpen(true)}
           >
-            <CircleX size={14} />
             Dar de baja
-          </Button>
+          </button>
           <button
             type="submit"
             disabled={!canSubmit}
-            className={`w-full col-span-2 px-4 py-2 rounded-lg transition-colors ${canSubmit ?
+            className={`w-full col-span-2 py-2 rounded-lg transition-colors ${canSubmit ?
               'bg-transparent border border-gray-400 text-gray-700 dark:border-gray-5 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-2 focus:ring-gray-400 cursor-pointer'
               :
               'cursor-not-allowed text-gray-700 dark:text-gray-3 dark:bg-gray-2 focus:ring-gray-400'

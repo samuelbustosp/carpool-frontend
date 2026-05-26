@@ -1,7 +1,7 @@
+import { API_URL } from "@/constants/api";
 import { ReviewResponseDTO } from "@/modules/review/types/dto/ReviewResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
 /**
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
     const body = await req.json();
 
-    const res = await fetch(`${apiUrl}/review/driver`, {
+    const res = await fetch(`${API_URL}/review/driver`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json" ,

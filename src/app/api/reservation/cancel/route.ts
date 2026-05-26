@@ -1,8 +1,7 @@
+import { API_URL } from "@/constants/api";
 import { VoidResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
 
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Cancelar una solicitud de reserva realizada por el usuario en sesion
@@ -14,7 +13,7 @@ export async function PUT(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
     const body = await req.json();
 
-    const res = await fetch(`${apiUrl}/reservation/cancel`, {
+    const res = await fetch(`${API_URL}/reservation/cancel`, {
       method: "PUT",
       headers: { 
         "Content-Type": "application/json" ,

@@ -3,6 +3,7 @@ import { R2_PUBLIC_PREFIX } from '@/constants/imagesR2';
 import { useAuth } from '@/contexts/authContext';
 import { Star } from 'lucide-react';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 interface ProfileHeaderProps{
   role?: string
@@ -10,9 +11,16 @@ interface ProfileHeaderProps{
 
 export function ProfileHeader({role}:ProfileHeaderProps) {
 
-  const { user, prevImage, imageLoading, loading } = useAuth();
+  const { user, prevImage, imageLoading, loading, fetchFullUser } = useAuth();
   const imageToShow = prevImage || user?.profileImage;
 
+  useEffect(() => {
+    if (role) {
+      fetchFullUser();
+    }
+  }, [role]);
+
+  
   return (
     <div className="flex items-top justify-center gap-4 px-4">
 
@@ -43,7 +51,7 @@ export function ProfileHeader({role}:ProfileHeaderProps) {
             <span>
               <Star size={12} fill="currentColor" />
             </span>
-            {role == 'conductor' ? (user?.driverRating ? user.driverRating : "0") : user?.passengerRating}
+            {role == 'conductor' ? (user?.driverRating ? user.driverRating.toFixed(1) : "0") : user?.passengerRating.toFixed(1)}
           </p> 
           
         </div>

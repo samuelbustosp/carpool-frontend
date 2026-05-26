@@ -1,7 +1,7 @@
 import { VerifyCreatorResponse } from "@/modules/trip/types/dto/tripResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Verifica si el usuario actual es el creador de un viaje específico.
@@ -17,7 +17,7 @@ export async function GET(
     const { id } = await context.params;
     const token = req.cookies.get('token')?.value;
 
-    const res = await fetch(`${apiUrl}/trip/is-creator/${id}`, {
+    const res = await fetch(`${API_URL}/trip/is-creator/${id}`, {
       headers: {
         "Content-Type": "application/json",
         'Authorization': `Bearer ${token}`

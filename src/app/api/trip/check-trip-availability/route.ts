@@ -1,7 +1,7 @@
 import { VoidResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Valida que el chofer no tenga mas de un viaje creado con le misma fecha y hora.
@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
       params.append("idTrip", idTrip);
     }
 
-    const res = await fetch(`${apiUrl}/trip/check-trip-availability?${params}`, {
+    const res = await fetch(`${API_URL}/trip/check-trip-availability?${params}`, {
       headers: { 
         'Authorization': `Bearer ${token}`
       },

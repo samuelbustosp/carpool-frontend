@@ -27,7 +27,7 @@ export default function Debt() {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="flex flex-col flex-1 items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-8/90 backdrop-blur rounded-xl p-6 space-y-4">
 
         <div className="flex items-center gap-3">

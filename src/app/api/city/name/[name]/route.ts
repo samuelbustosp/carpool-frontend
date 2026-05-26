@@ -1,7 +1,8 @@
+import { API_URL } from "@/constants/api";
 import { CityResponseDTO } from "@/modules/city/types/dto/CityResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 export async function GET(
   req: NextRequest,
@@ -12,7 +13,7 @@ export async function GET(
     const token = req.cookies.get('token')?.value;
 
 
-    const res = await fetch(`${apiUrl}/city/name/${name}`, {
+    const res = await fetch(`${API_URL}/city/name/${name}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

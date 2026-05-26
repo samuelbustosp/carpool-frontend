@@ -2,7 +2,7 @@
 import { SearchTripResponse } from "@/modules/search/types/dto/searchTripResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 export async function POST(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     const params = new URLSearchParams();
     params.append("skip", skip);
    
-    const res = await fetch(`${apiUrl}/trip/search?${params.toString()}`, {
+    const res = await fetch(`${API_URL}/trip/search?${params.toString()}`, {
         method:'POST',
         headers: {
         Authorization: `Bearer ${token}`,

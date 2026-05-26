@@ -1,7 +1,8 @@
+import { API_URL } from "@/constants/api";
 import { ReviewsFromMeDTO } from "@/modules/review/types/dto/ReviewsFromMeDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 /**
  * Metodo para obtener las reseñas que he realizado
@@ -45,7 +46,7 @@ export async function GET(
     if (fromDate) params.append("fromDate", fromDate);
     if (toDate) params.append("toDate", toDate);
 
-    const res = await fetch(`${apiUrl}/review/my-made-reviews?${params.toString()}`, {
+    const res = await fetch(`${API_URL}/review/my-made-reviews?${params.toString()}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

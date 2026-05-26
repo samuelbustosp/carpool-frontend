@@ -1,8 +1,9 @@
 
+import { API_URL } from "@/constants/api";
 import { DriverCO2StatResponse } from "@/modules/activity/types/dto/DriverStatResponse";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 /**
  * Obtiene las estadísticas de CO2 ahorrado por el conductor.
@@ -18,7 +19,7 @@ export async function GET(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
 
 
-    const res = await fetch(`${apiUrl}/stats/driver/co2`, {
+    const res = await fetch(`${API_URL}/stats/driver/co2`, {
       headers: {
         'Authorization': `Bearer ${token}`
       },

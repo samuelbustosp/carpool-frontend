@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 
 export async function GET(req: NextRequest, context: { params: Promise<{ path: string[] }> }) {
@@ -9,7 +9,7 @@ export async function GET(req: NextRequest, context: { params: Promise<{ path: s
   const url = new URL(req.url);
   const query = url.search; 
 
-  const backendUrl = `${apiUrl}/users/${path.join("/")}${query}`;
+  const backendUrl = `${API_URL}/users/${path.join("/")}${query}`;
 
 
   try {

@@ -37,13 +37,7 @@ export default function MyTrips() {
             }
 
             const response = await getMyTrips(currentSkip, ['CREATED', 'CLOSED']);
-            // if(responseMyTrips.state === "ERROR"){
-            //     setError(responseMyTrips.messages[0])
-            // }
 
-            // if(responseMyTrips.state === "OK" && responseMyTrips.data){
-            //     setMyTrips(responseMyTrips.data);
-            // }
             if (response.state === "ERROR") {
                 hasMoreRef.current = false;
                 setError(response.messages[0]);

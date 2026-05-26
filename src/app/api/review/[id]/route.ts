@@ -1,8 +1,8 @@
 
+import { API_URL } from "@/constants/api";
 import { VoidResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Elimina una reseña hecha por el usuario en sesión
@@ -22,7 +22,7 @@ export async function DELETE(
     const { id } = await context.params;
     const token = req.cookies.get('token')?.value;
 
-    const res = await fetch(`${apiUrl}/review/${id}`, {
+    const res = await fetch(`${API_URL}/review/${id}`, {
       headers: {
         "Content-Type": "application/json",
         'Authorization': `Bearer ${token}`

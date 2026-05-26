@@ -15,11 +15,13 @@ export function TripDriverList({ trips, onError, onSuccess }: TripDriverListProp
 
   if (trips.length === 0) {
     return (
+      <div className="bg-dark-5 h-48 rounded-2xl flex items-center border border-gray-2/50">
         <EmptyAlert
           icon={<MapPinOff size={32} />}
           title="No hay viajes disponibles"
-          description="Todavía no tenés viajes asociados como chofer."
+          description="Todavía no tenés viajes asociados como conductor."
         />
+      </div>
     );
   }
 

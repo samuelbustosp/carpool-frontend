@@ -68,8 +68,6 @@ export default function NewDriverReview() {
     }
   }, [tripId]);
 
-
-
   const handleRating = (rate: number) => {
     if (isSubmitting) return;
     setRating(rate);
@@ -121,7 +119,7 @@ export default function NewDriverReview() {
 
   if (isChecking) {
     return (
-      <div className="h-full my-auto w-lg">
+      <div className="h-full my-auto w-full">
         <NewDriverReviewSkeleton/>
       </div>
     );
@@ -142,7 +140,7 @@ export default function NewDriverReview() {
       className="flex flex-col gap-4 w-full"
     >
       <span className="text-lg font-medium">
-        ¿Cómo calificarías al chofer?
+        ¿Cómo calificarías al conductor?
       </span>
       {/* Rating */}
       <div className="flex flex-col gap-1 justify-center items-center">
@@ -175,7 +173,7 @@ export default function NewDriverReview() {
           {...register("comment")}
           rows={4}
           maxLength={300}
-          placeholder="¿Que le dirias a otras personas acerca de este chofer? (Opcional)"
+          placeholder="¿Que le dirias a otras personas acerca de este conductor? (Opcional)"
           disabled={isSubmitting}
           className={`
             w-full rounded-xl border bg-gray-2 p-3 text-sm
@@ -223,7 +221,7 @@ export default function NewDriverReview() {
         onClose={() => setIsSuccessDialogOpen(false)}
         type="success"
         title="¡Reseña enviada con éxito!"
-        description='Gracias por tomarte el tiempo de calificar al chofer. Tu comentario ayuda a que los viajes sean cada vez mejores'
+        description='Gracias por tomarte el tiempo de calificar al conductor. Tu comentario ayuda a que los viajes sean cada vez mejores'
         confirmText="Aceptar"
         singleButton={true}
         onConfirm={()=> router.push('/home')}

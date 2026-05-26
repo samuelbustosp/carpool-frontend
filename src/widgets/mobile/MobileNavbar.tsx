@@ -26,10 +26,10 @@ const navItems: {
 
 export default function MobileNavbar() {
   const pathname = usePathname();
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   
-  if (loading || !user) return null;
+  if (!user) return null;
 
   const userRoles = user?.roles || ['user'];
   
@@ -76,10 +76,10 @@ return (
                 className={`flex flex-col items-center text-sm ${
                   isActive
                     ? 'dark:text-white text-gray-2'
-                    : 'dark:text-gray-4 text-gray-10'
+                    : 'dark:text-gray-11/80 text-gray-10'
                 }`}
               >
-                <Icon size={size} className="mb-0.5" />
+                <Icon size={size} strokeWidth={`${isActive ? '2.5' : '2'}`} className="mb-0.5" />
               </Link>
             </li>
           );

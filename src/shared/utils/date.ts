@@ -5,16 +5,39 @@
  * formatShortDateText(new Date(2025, 2, 18))
  * // → "18 de mar."
  */
-export function formatShortDateText(date: Date) {
+export function formatShortDateText(date: Date | string) {
+  const parsedDate = typeof date === 'string' ? new Date(date) : date;
+
   const parts = new Intl.DateTimeFormat('es-ES', {
     day: '2-digit',
     month: 'short',
-  }).formatToParts(date)
+  }).formatToParts(parsedDate);
 
-  const day = parts.find((p) => p.type === 'day')?.value
-  const month = parts.find((p) => p.type === 'month')?.value.replace('.', '')
+  const day = parts.find((p) => p.type === 'day')?.value;
+  const month = parts.find((p) => p.type === 'month')?.value.replace('.', '');
 
-  return `${day} de ${month}.`
+  return `${day} de ${month}.`;
+}
+
+export function formatSmartShortDateText(date: Date | string) {
+  const parsedDate = typeof date === 'string' ? new Date(date) : date;
+
+  const currentYear = new Date().getFullYear();
+  const dateYear = parsedDate.getFullYear();
+
+  const parts = new Intl.DateTimeFormat('es-ES', {
+    day: '2-digit',
+    month: 'long',
+    ...(dateYear !== currentYear && { year: 'numeric' }),
+  }).formatToParts(parsedDate);
+
+  const day = parts.find((p) => p.type === 'day')?.value;
+  const month = parts.find((p) => p.type === 'month')?.value?.replace('.', '');
+  const year = parts.find((p) => p.type === 'year')?.value;
+
+  return dateYear !== currentYear
+    ? `${day} de ${month} ${year}`
+    : `${day} de ${month}`;
 }
 
 /**
@@ -24,18 +47,20 @@ export function formatShortDateText(date: Date) {
  * formatShortDateTextWithYear(new Date(2025, 2, 18))
  * // → "18 de mar. de 2025"
  */
-export function formatShortDateTextWithYear(date: Date) {
+export function formatShortDateTextWithYear(date: Date | string) {
+  const parsedDate = typeof date === 'string' ? new Date(date) : date;
+
   const parts = new Intl.DateTimeFormat('es-ES', {
     day: '2-digit',
     month: 'short',
     year: 'numeric',
-  }).formatToParts(date)
+  }).formatToParts(parsedDate);
 
-  const day = parts.find((p) => p.type === 'day')?.value
-  const month = parts.find((p) => p.type === 'month')?.value.replace('.', '')
-  const year = parts.find((p) => p.type === 'year')?.value
+  const day = parts.find((p) => p.type === 'day')?.value;
+  const month = parts.find((p) => p.type === 'month')?.value?.replace('.', '');
+  const year = parts.find((p) => p.type === 'year')?.value;
 
-  return `${day} de ${month}. ${year}`
+  return `${day} de ${month}. ${year}`;
 }
 
 

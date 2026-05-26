@@ -2,7 +2,7 @@ import { UserDetailsResponseDTO } from "@/modules/profile/types/dto/userDetailsR
 import { VoidResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Obtiene los datos del usuario en sesion
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
   try {
   
     // Llamar al backend
-    const res = await fetch(`${apiUrl}/users`, {
+    const res = await fetch(`${API_URL}/users`, {
       method: "GET",
       headers: { 
         'Authorization': `Bearer ${token}`
@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Llamar al backend para registrar al usuario
-    const res = await fetch(`${apiUrl}/users`, {
+    const res = await fetch(`${API_URL}/users`, {
       method: "POST",
       headers: backendHeaders,
       body: JSON.stringify(body),

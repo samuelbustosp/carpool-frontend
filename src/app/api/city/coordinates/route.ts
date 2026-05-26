@@ -1,8 +1,9 @@
 import { fetchWithRefresh } from "@/shared/lib/http/authInterceptor";
 import { CityResponseDTO } from "@/modules/city/types/dto/CityResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
+import { API_URL } from "@/constants/api";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 export async function GET(req: NextRequest) {
   try {
@@ -27,7 +28,7 @@ export async function GET(req: NextRequest) {
 
     // 
     const res = await fetchWithRefresh(
-      `${apiUrl}/city/coordinates?lat=${lat}&lng=${lng}`,
+      `${API_URL}/city/coordinates?lat=${lat}&lng=${lng}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

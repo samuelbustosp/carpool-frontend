@@ -1,7 +1,7 @@
 import { VoidResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Cierra una parada intermedia o destino del viaje en curso
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
     const body = await req.json();
 
-    const res = await fetch(`${apiUrl}/trip/arrive-tripstop`, {
+    const res = await fetch(`${API_URL}/trip/arrive-tripstop`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json" ,

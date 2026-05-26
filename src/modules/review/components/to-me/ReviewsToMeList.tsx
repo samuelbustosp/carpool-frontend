@@ -13,10 +13,11 @@ interface ReviewsToMeListProps{
 export function ReviewsToMeList({reviews, passenger}:ReviewsToMeListProps){
   if(reviews?.length === 0){
     return(
-      <div>
+      <div className="bg-dark-5 h-48 rounded-2xl flex items-center border border-gray-2/50">
         <EmptyAlert
           icon={<StarOff size={32} />}
-          title="Aún no te han realizado reseñas."
+          title="No te han realizado reseñas"
+          description="Las reseñas que te hagan aparecerán aquí."
         />
       </div>
     )

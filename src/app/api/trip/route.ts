@@ -2,7 +2,7 @@ import { TripDriverResponse } from "@/modules/driver-trips/types/dto/tripDriverR
 import { VoidResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Obtiene los viajes del chofer autenticado.
@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
 
     const query = params.toString() ? `?${params.toString()}` : '';
 
-    const res = await fetch(`${apiUrl}/trip${query}`, {
+    const res = await fetch(`${API_URL}/trip${query}`, {
       headers: { 
         "Content-Type": "application/json" ,
         'Authorization': `Bearer ${token}`
@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
     const body = await req.json();
 
-    const res = await fetch(`${apiUrl}/trip`, {
+    const res = await fetch(`${API_URL}/trip`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json" ,
@@ -125,7 +125,7 @@ export async function PUT(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
     const body = await req.json();
 
-    const res = await fetch(`${apiUrl}/trip`, {
+    const res = await fetch(`${API_URL}/trip`, {
       method: "PUT",
       headers: { 
         "Content-Type": "application/json" ,

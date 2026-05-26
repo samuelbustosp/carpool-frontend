@@ -43,6 +43,8 @@
     "react-icons": "^5.5.0",
     "react-simple-star-rating": "^5.1.7",
     "recharts": "^3.8.1",
+    "simplebar": "^6.3.3",
+    "simplebar-react": "^3.3.2",
     "sockjs-client": "1.6.1",
     "stompjs": "2.3.3",
     "tailwind-merge": "^3.3.1",

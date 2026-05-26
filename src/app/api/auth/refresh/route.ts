@@ -1,10 +1,9 @@
 
+import { API_URL } from '@/constants/api';
 import { RefreshResponse } from '@/modules/auth/types/dto/refreshResponseDTO';
 import { parseJwt } from '@/shared/utils/jwt';
 
 import { NextRequest, NextResponse } from 'next/server';
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
 /**
@@ -31,7 +30,7 @@ export async function POST(req: NextRequest) {
   
   try {
     // Llamar al backend
-    const res = await fetch(`${apiUrl}/auth/refresh`, {
+    const res = await fetch(`${API_URL}/auth/refresh`, {
       method: 'POST',
       headers: { 
         'Authorization': `Bearer ${refreshToken}`,

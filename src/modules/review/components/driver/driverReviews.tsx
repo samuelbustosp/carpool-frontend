@@ -97,9 +97,9 @@ export default function DriverReviews(){
   return(
     <div className="w-full">
       <div className="mb-3">
-        <h1 className="text-xl font-semibold mb-1">Reseñas del chofer</h1>
+        <h1 className="text-xl font-semibold mb-1">Reseñas del conductor</h1>
         <p className="font-inter text-sm">
-          Acá podés ver las reseñas que otros pasajeros le realizaron a este chofer.
+          Acá podés ver las reseñas que otros pasajeros le realizaron a este conductor.
         </p>
 
       </div>

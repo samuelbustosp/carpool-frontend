@@ -157,8 +157,8 @@ export function ProfileOptions({ role, logout }: ProfileOptionsProps) {
             <ChevronRight size={18} />
           </Link>
 
-          <Link
-            href={'/profile'}
+          <a 
+            href="/files/terminos_y_condiciones.pdf" download
             className={linkClasses}
           >
             <div className="flex items-center gap-2">   
@@ -167,7 +167,7 @@ export function ProfileOptions({ role, logout }: ProfileOptionsProps) {
             </div>
             
             <ChevronRight size={18} />
-          </Link>
+          </a>
         </div>
       </div>
       {/* Bloque 4: Sesión  */}

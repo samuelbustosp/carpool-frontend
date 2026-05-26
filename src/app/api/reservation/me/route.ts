@@ -1,8 +1,8 @@
 
+import { API_URL } from "@/constants/api";
 import { ReservationResponse } from "@/modules/reservation/create/types/dto/reservationResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
 export async function GET(req: NextRequest) {
@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
     if (fromDate) params.append("fromDate", fromDate);
     if (toDate) params.append("toDate", toDate);
 
-    const url = `${apiUrl}/reservation/me?${params.toString()}`;
+    const url = `${API_URL}/reservation/me?${params.toString()}`;
    
     const res = await fetch(url, {
       headers: {

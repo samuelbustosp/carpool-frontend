@@ -1,6 +1,6 @@
 'use client'
 
-import { EmptyAlert } from "@/components/ux/EmptyAlert";
+import { ErrorAlert } from "@/components/ux/admin/ErrorAlert";
 import { R2_PUBLIC_PREFIX } from "@/constants/imagesR2";
 import { baggageOptions } from "@/modules/trip/components/new-trip/TripForm";
 import { TripRoutePreview } from "@/modules/trip/components/new-trip/TripRoutePreview";
@@ -32,7 +32,7 @@ export default function DriverTripDetails() {
     )
   if (tripError) return (
     <div className="my-50">
-      <EmptyAlert
+      <ErrorAlert
         icon={<CircleX size={32} />}
         title="Error inesperado"
         description={tripError ?? "Lo sentimos ocurrió un error inesperado."}

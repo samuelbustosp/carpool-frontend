@@ -1,7 +1,7 @@
 import { UserDebtResponseDTO } from "@/modules/debt/types/UserDebtResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "@/constants/api";
 
 /**
  * Recupera el estado de deuda del usuario autenticado.
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
 
-    const res = await fetch(`${apiUrl}/users/debtor`, {
+    const res = await fetch(`${API_URL}/users/debtor`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

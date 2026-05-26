@@ -1,7 +1,8 @@
+import { API_URL } from "@/constants/api";
 import { VoidResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 /**
  * Cambio de estado de una reserva, ya sea aceptarla o rechazarla
@@ -14,7 +15,7 @@ export async function PUT(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
     const body = await req.json();
 
-    const res = await fetch(`${apiUrl}/reservation`, {
+    const res = await fetch(`${API_URL}/reservation`, {
       method: "PUT",
       headers: { 
         "Content-Type": "application/json" ,
@@ -63,7 +64,7 @@ export async function POST(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
     const body = await req.json();
 
-    const res = await fetch(`${apiUrl}/reservation`, {
+    const res = await fetch(`${API_URL}/reservation`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json" ,

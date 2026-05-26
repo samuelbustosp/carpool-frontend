@@ -1,7 +1,7 @@
+import { API_URL } from "@/constants/api";
 import { VoidResponse } from "@/shared/types/response";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export async function POST(req: NextRequest){
     try{
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest){
             );
         }
 
-        const res = await fetch(`${apiUrl}/password-change`,{
+        const res = await fetch(`${API_URL}/password-change`,{
             method: "POST",
             headers:{"Content-Type": "application/json"},
             body: JSON.stringify(body),

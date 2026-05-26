@@ -1,23 +1,14 @@
 'use client';
 
-import { Calendar1, Search } from "lucide-react";
+import { ListFilter, Search, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import CitySearch from "./CitySearch";
 
 export default function SearchBar() {
   const [originCity, setOriginCity] = useState<number | null>(null);
   const [destinationCity, setDestinationCity] = useState<number | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date>();
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [error, setError] = useState<string>(""); 
   const router = useRouter();
 
@@ -34,12 +25,15 @@ export default function SearchBar() {
     queryParams.append("destination", destinationCity.toString());
 
     if (selectedDate) {
-      const departureDate = selectedDate.toISOString().slice(0, 10);
-      queryParams.append("departureDate", departureDate);
+      queryParams.append("departureDate", selectedDate);
     }
 
     router.push(`/search/results?${queryParams.toString()}`);
   };
+
+  const handleClearFilterDate = () => {
+    setSelectedDate(null)
+  }
 
   return (
     <div className="shadow-lg w-full flex flex-col gap-2">
@@ -51,49 +45,43 @@ export default function SearchBar() {
           setOriginCity={setOriginCity}
           setDestinationCity={setDestinationCity}
         />
-
-        {/* Botones */}
-        <div className="flex flex-col gap-2 ">
-          <button
-            onClick={handleSearch}
-            className={`bg-gray-2 hover:bg-gray-2 transition p-2 rounded-full ${!originCity || !destinationCity ? "opacity-50 " : ""}`}
-            disabled={!originCity || !destinationCity} // <- botón deshabilitado
-          >
-            <Search size={16} />
-          </button>
-
-          {/* Dialog calendario */}
-          <Dialog open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-            <DialogTrigger asChild>
-              <button 
-                className={`bg-gray-2 p-2 rounded-full ${selectedDate && 'border border-gray-9'}`}
-                onClick={() => setIsCalendarOpen(true)}
-              >
-                <Calendar1 size={16} />
-              </button>
-            </DialogTrigger>
-
-            <DialogContent className="w-full max-w-sm sm:max-w-md md:max-w-md flex flex-col items-center gap-6">
-              <DialogHeader>
-                <DialogTitle>¿Cuándo vas a viajar?</DialogTitle>
-              </DialogHeader>
-              <Calendar
-                mode="single"
-                selected={selectedDate}
-                onSelect={(date) => {
-                  setSelectedDate(date);
-                  setIsCalendarOpen(false);
-                }}
-                className="rounded-md border w-72 h-[320px]"
-                classNames={{
-                  selected: "",
-                  today: "ring-1 ring-gray-5 rounded-lg",
-                  outside: "text-muted-foreground",
-                }}
-              />
-            </DialogContent>
-          </Dialog>
+        <button
+          onClick={handleSearch}
+          className={`flex items-center justify-between gap-1 bg-gray-2 text-sm hover:bg-gray-10 transition 
+            p-2 rounded-full cursor-pointer
+            ${!originCity || !destinationCity ? "opacity-50 " : ""}`}
+          disabled={!originCity || !destinationCity} 
+        >
+          <Search size={20} />
+        </button>
+        
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 text-sm px-3 py-1 rounded-lg bg-gray-7 w-fit">
+          <ListFilter size={14} />
+          <p>Filtros</p>
         </div>
+        
+        <div className="flex items-center bg-gray-7 rounded-lg px-1">
+          <input 
+            type="date" 
+            value={selectedDate ?? ''} 
+            onChange={(e) => setSelectedDate(e.target.value)} 
+            min={new Date().toISOString().split("T")[0]} 
+            className="bg-gray-7 w-30 cursor-pointer rounded-lg text-sm p-1 outline-none border border-transparent focus:border-gray-6" 
+            placeholder="Seleccione fecha"
+          /> 
+          {selectedDate && 
+            <button 
+              className="rounded-full hover:bg-gray-2 p-1 cursor-pointer"
+              onClick={handleClearFilterDate}
+            >
+              <X size={14}/>
+            </button>
+          }
+        </div>
+        
+        
       </div>
 
       {/* Mensaje de error */}

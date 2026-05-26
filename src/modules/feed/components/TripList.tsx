@@ -70,11 +70,13 @@ export default function TripList({ feed, currentCity, originSearch, destinationS
 
   if (feed.length === 0 && !loading) {
     return (
-      <EmptyAlert
-        icon={<MapPinOff size={32} />}
-        title="No hay viajes disponibles"
-        description="Intenta ajustar tus filtros o volver más tarde."
-      />
+      <div className="bg-dark-5 h-48 rounded-2xl flex items-center border border-gray-2/50">
+        <EmptyAlert
+          icon={<MapPinOff size={32} />}
+          title="No hay viajes disponibles"
+          description="Intenta ajustar tus filtros o volver más tarde."
+        />
+      </div>
     );
   }
 
@@ -103,8 +105,8 @@ export default function TripList({ feed, currentCity, originSearch, destinationS
               </h1>
             )}
             <div 
-                onClick={() => handleTripClick(trip.tripId)} 
-                className="cursor-pointer block" // Añadir cursor-pointer para mejor UX
+              onClick={() => handleTripClick(trip.tripId)} 
+              className="cursor-pointer block"
             >
               <Trip 
                 trip={trip} 
@@ -113,7 +115,6 @@ export default function TripList({ feed, currentCity, originSearch, destinationS
                 destinationSearch={destinationSearch}
               /> 
             </div>
-             {/* Preguntar si hace falt aun endpoint para la ciudad por defecto*/}
           </div>
         );
       })}

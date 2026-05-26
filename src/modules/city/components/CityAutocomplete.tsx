@@ -6,6 +6,9 @@ import { capitalizeWords } from "@/shared/utils/string";
 import { Search, X } from "lucide-react";
 import { ReactNode, useEffect, useState } from "react";
 import { CitiesResponseDTO } from "../types/dto/CitiesResponseDTO";
+import SimpleBar from "simplebar-react";
+
+
 
 interface CityAutocompleteProps {
   value: number | null;
@@ -16,6 +19,7 @@ interface CityAutocompleteProps {
   icon?: ReactNode;
   excludeIds?: number[];
   outline?: boolean;
+  searchIcon?: boolean;
   onFocus?: () => void
   onBlur?: () => void
 }
@@ -29,6 +33,7 @@ export function CityAutocomplete({
   icon,
   excludeIds,
   outline,
+  searchIcon=true,
   onFocus,
   onBlur
 }: CityAutocompleteProps) {
@@ -141,7 +146,7 @@ export function CityAutocomplete({
 
         {/* Ícono a la derecha */}
         {!loading && (
-          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-2 dark:text-gray-5 cursor-pointer">
+          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-2 dark:text-gray-11 cursor-pointer">
             {query ? (
               <X
                 className="w-4 h-4"
@@ -152,7 +157,7 @@ export function CityAutocomplete({
                 }}
               />
             ) : (
-              <Search className="w-4 h-4" />
+              searchIcon && <Search className="w-4 h-4" />
             )}
           </span>
 
@@ -160,23 +165,31 @@ export function CityAutocomplete({
       </div>
 
       {showDropdown && cities.length === 0 && (
-        <div className="absolute z-10 w-full bg-white dark:bg-dark-5 border rounded mt-1 p-2 text-sm text-gray-400">
-          No se encontraron localidades
+        <div className="absolute z-10 w-full bg-white dark:bg-dark-6 border border-gray-2/60 rounded-lg mt-1.5 py-2 px-4 text-sm text-gray-11">
+          <p>
+            No se encontraron localidades
+          </p>
         </div>
       )}
 
       {showDropdown && cities.length > 0 && (
-        <ul className="absolute z-10 w-full bg-white text-gray-2 dark:text-gray-1 dark:bg-dark-5 border border-gray-5 dark:border-gray-2 rounded mt-1 max-h-40 overflow-y-auto shadow">
-          {cities.map((city) => (
-            <li
-              key={city.id}
-              onClick={() => handleSelect(city)}
-              className="p-2 cursor-pointer hover:bg-gray-1 dark:hover:bg-gray-2"
-            >
-              {city.name}
-            </li>
-          ))}
-        </ul>
+        <div className="absolute z-10 w-full mt-1.5">
+          <SimpleBar
+            className="max-h-40 rounded-lg border border-gray-2/60 bg-dark-6 shadow"
+          >
+            <ul className=" p-2">
+              {cities.map((city) => (
+                <li
+                  key={city.id}
+                  onClick={() => handleSelect(city)}
+                  className="py-2 px-2 cursor-pointer text-sm text-gray-11 hover:text-white hover:bg-gray-7 rounded-lg"
+                >
+                  {city.name}
+                </li>
+              ))}
+            </ul>
+          </SimpleBar>
+        </div>
       )}
 
       {(error) && (

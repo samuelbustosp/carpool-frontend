@@ -48,7 +48,10 @@ export const registerVehicleStep2Schema = z.object({
   color: z
     .string()
     .min(1, 'El color del vehículo no puede estar en blanco.')
-    .regex(/^[a-zA-Z ]+$/, 'El color debe contener solo letras y espacios'),
+    .regex(
+      /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/,
+      'El color debe ser un código hexadecimal válido.'
+    ),
 
   availableSeats: z
   .number({

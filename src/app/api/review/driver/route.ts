@@ -1,7 +1,8 @@
+import { API_URL } from "@/constants/api";
 import { DriverReviewResponseDTO } from "@/modules/review/types/dto/DriverReviewResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 /**
  * Obtiene las reservas que otros usuarios le han realizado a un chofer
@@ -28,7 +29,7 @@ export async function GET(
       );
     }
     const res = await fetch(
-      `${apiUrl}/review/driver?driverId=${driverId}&skip=${skip ?? 0}&orderBy=${orderBy ?? "RECENT"}`,
+      `${API_URL}/review/driver?driverId=${driverId}&skip=${skip ?? 0}&orderBy=${orderBy ?? "RECENT"}`,
       {
         headers: {
           "Content-Type": "application/json",

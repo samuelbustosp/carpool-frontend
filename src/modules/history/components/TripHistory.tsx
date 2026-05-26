@@ -69,7 +69,7 @@ export default function TripHistory() {
           }
         } else {
           hasMoreRef.current = false;
-          setToast({ message: response.messages[0] ?? 'No se han podido recuperar los viajes del chofer.', type: 'error' });
+          setToast({ message: response.messages[0] ?? 'No se han podido recuperar los viajes del conductor.', type: 'error' });
           if (reset) setDriverTrips([]);
         }
       }

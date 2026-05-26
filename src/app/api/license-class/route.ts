@@ -1,13 +1,13 @@
+import { API_URL } from "@/constants/api";
 import { LicenseClassResponseDTO } from "@/modules/driver/types/dto/licenseClassResponseDTO";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get('token')?.value;
 
-    const res = await fetch(`${apiUrl}/license-class`, {
+    const res = await fetch(`${API_URL}/license-class`, {
       headers: {
         "Content-Type": "application/json",
         'Authorization': `Bearer ${token}`

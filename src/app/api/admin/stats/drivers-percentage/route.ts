@@ -1,8 +1,8 @@
 
+import { API_URL } from "@/constants/api";
 import { DriversPercentageResponse } from "@/modules/admin/dashboard/types/dto/driversPercentageResponse";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Obtiene estadísticas de los conductores.
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
 
     
-    const res = await fetch(`${apiUrl}/admin/stats/drivers-percentage`, {
+    const res = await fetch(`${API_URL}/admin/stats/drivers-percentage`, {
       headers: {
         'Authorization': `Bearer ${token}`
       },
