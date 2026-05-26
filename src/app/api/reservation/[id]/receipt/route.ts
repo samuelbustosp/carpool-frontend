@@ -12,9 +12,15 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
  * @param params - Parámetros de ruta, contiene el id de la reserva
  * @returns PDF como stream binario o respuesta de error en JSON
  */
+
+type Props = {
+  params: Promise<{
+    id: string;
+  }>;
+};
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: Props
 ) {
   try {
     const token = req.cookies.get("token")?.value;
