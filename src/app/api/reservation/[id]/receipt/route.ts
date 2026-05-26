@@ -1,8 +1,6 @@
 import { API_URL } from "@/constants/api";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
 /**
  * Descarga el comprobante PDF de una reserva completada del usuario en sesión.
  *
